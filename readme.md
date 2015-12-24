@@ -515,6 +515,7 @@ The point is to print out a song with the following lyrics:
 * Take one down, pass it around, no more bottles of beer on the wall.
 * No more bottles of beer on the wall, no more bottles of beer.
 * Go to the store and buy some more, 99 bottles of beer on the wall.
+
 Additionally, you can pass the desired initial number of bottles to use (rather than 99)
 as a command-line argument 
 ``` kotlin
@@ -753,6 +754,35 @@ the index of the largest element in the array, or null if the array is empty.
 	}
 	fun max(a: Int, b: Int) = if (a > b) a else b
 ```
+## Runs
 
+Any array may be viewed as a number of "runs" of equal numbers.
+For example, the following array has two runs:
+  1, 1, 1, 2, 2
+Three 1's in a row form the first run, and two 2's form the second.
+This array has two runs of length one:
+  3, 4
+And this one has five runs:
+  1, 0, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0
+Your task is to implement the runs() function so that it returns the number
+of runs in the given array.
+
+```kotlin
+>	package runs
+
+	fun runs(a: IntArray): Int {
+		if (a.size==0)
+		    return 0
+	    
+	    var runNumber =a[0]
+	    var result = 1
+	    
+	    for (number in a)
+	    	if(runNumber != number){
+	    		result ++
+	            runNumber = number
+	        }
+	    return result
+	}
 
 
