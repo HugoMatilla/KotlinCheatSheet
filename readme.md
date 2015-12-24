@@ -503,18 +503,18 @@ Now, you can apply it to callable references.
 This example implements the famous "99 Bottles of Beer" program
 See http://99-bottles-of-beer.net/
 The point is to print out a song with the following lyrics:
-    * The "99 bottles of beer" song
-    * 99 bottles of beer on the wall, 99 bottles of beer.
-    * Take one down, pass it around, 98 bottles of beer on the wall.
-    * 98 bottles of beer on the wall, 98 bottles of beer.
-    * Take one down, pass it around, 97 bottles of beer on the wall.
-    *   ...
-    * 2 bottles of beer on the wall, 2 bottles of beer.
-    * Take one down, pass it around, 1 bottle of beer on the wall.
-    * 1 bottle of beer on the wall, 1 bottle of beer.
-    * Take one down, pass it around, no more bottles of beer on the wall.
-    * No more bottles of beer on the wall, no more bottles of beer.
-    * Go to the store and buy some more, 99 bottles of beer on the wall.
+* The "99 bottles of beer" song
+* 99 bottles of beer on the wall, 99 bottles of beer.
+* Take one down, pass it around, 98 bottles of beer on the wall.
+* 98 bottles of beer on the wall, 98 bottles of beer.
+* Take one down, pass it around, 97 bottles of beer on the wall.
+*   ...
+* 2 bottles of beer on the wall, 2 bottles of beer.
+* Take one down, pass it around, 1 bottle of beer on the wall.
+* 1 bottle of beer on the wall, 1 bottle of beer.
+* Take one down, pass it around, no more bottles of beer on the wall.
+* No more bottles of beer on the wall, no more bottles of beer.
+* Go to the store and buy some more, 99 bottles of beer on the wall.
 Additionally, you can pass the desired initial number of bottles to use (rather than 99)
 as a command-line argument 
 ``` kotlin
