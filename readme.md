@@ -25,7 +25,7 @@ http://kotlinlang.org/docs/reference/basic-types.html#arrays
 	    }
 	    println("Hello, ${args[0]}!")
 	}
-
+```
 
 ## Reading many names from the command line
 Line 2 demonstrates the for-loop, that would have been called "enhanced"
@@ -38,6 +38,7 @@ See http://kotlinlang.org/docs/reference/basic-syntax.html#using-a-for-loop
 	    for (name in args)
 	        println("Hello, $name!")
 	}
+```
 
 ## _When_
 In this example, `val` denotes a declaration of a read-only local variable,
