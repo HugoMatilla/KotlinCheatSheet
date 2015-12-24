@@ -718,11 +718,10 @@ Ommitted
 
 #Problems
 ## Sum
-/*
- * Your task is to implement the sum() function so that it computes the sum of
- * all elements in the given array a.
- */
-```
+Your task is to implement the sum() function so that it computes the sum of
+all elements in the given array a.
+
+```kotlin
 >	package sum
 
 	fun sum(a: IntArray): Int {
@@ -735,7 +734,7 @@ Ommitted
 ## indexOfMax
 Your task is to implement the indexOfMax() function so that it returns
 the index of the largest element in the array, or null if the array is empty.
-```
+```kotlin
 >	package maxindex
 
 	fun indexOfMax(a: IntArray): Int? {
