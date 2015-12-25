@@ -798,7 +798,6 @@ A hint: there's a solution that looks at each element only once and uses no
 data structures like collections or trees.
 
 ```kotlin
-
 >	package pairless
 
 	fun findPairless(a: IntArray): Int {
@@ -813,3 +812,69 @@ data structures like collections or trees.
 ```
 ## Canvas
 Ommitted
+#Koans
+## joinOptions
+```kotlin
+>	fun joinOptions(options: Collection<String>) = options.joinToString(", ","[","]")
+```
+##Default arguments
+
+```kotlin
+
+	fun foo(name: String, number: Int = 42, toUpperCase: Boolean = false) =
+        (if (toUpperCase) name.toUpperCase() else name) + number
+
+	fun useFoo() = listOf(
+	        foo("a"),
+	        foo("b", number = 1),
+	        foo("c", toUpperCase = true),
+	        foo(name = "d", number = 2, toUpperCase = true)
+	)
+```
+## Lambdas
+```kotlin
+>	fun containsEven(collection: Collection<Int>): Boolean = collection.any { it.mod(2) == 0 }
+```	
+
+## Strings
+```kotlin
+>	val s = "abc"
+	val str = "$s.length is ${s.length}" // evaluates to "abc.length is 3"
+	...
+	val month = "(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)"
+	fun getPattern() = """\d{2} ${month} \d{4}"""
+```	
+
+## Data classes
+```kotlin
+>	data class Person (var name: String, var age: Int) 
+
+	fun getPeople(): List<Person> {
+	    return listOf(Person("Alice", 29), Person("Bob", 31))
+	}
+```	
+
+##
+```kotlin
+>	
+```	
+
+##
+```kotlin
+>	
+```	
+
+##
+```kotlin
+>	
+```	
+
+##
+```kotlin
+>	
+```	
+
+##
+```kotlin
+>	
+```	
