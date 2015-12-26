@@ -810,7 +810,7 @@ data structures like collections or trees.
 	}
 	fun Int.isEven() = this.mod(2) !=1
 ```
-## Canvas
+# Canvas
 Ommitted
 #Koans
 ## joinOptions
@@ -854,9 +854,70 @@ Ommitted
 	}
 ```	
 
-##
+##Nullable types
 ```kotlin
->	
+>	fun sendMessageToClient(client: Client?, message: String?, mailer: Mailer){
+		    val mail = client?.personalInfo?.email ?: return
+		    if (message!=null)
+			    mailer.sendMessage(mail, message)
+		}
+
+	class Client (val personalInfo: PersonalInfo?)
+	class PersonalInfo (val email: String?)
+	interface Mailer {fun sendMessage(email: String, message: String)}
+```	
+
+## Smart Cast
+```kotlin
+>	fun eval(expr: Expr): Int =
+        when (expr) {
+            is Num -> expr.value
+            is Sum -> eval(expr.left) + eval(expr.right) 
+            else -> throw IllegalArgumentException("Unknown expression")
+        }
+
+	interface Expr
+	class Num(val value: Int) : Expr
+	class Sum(val left: Expr, val right: Expr) : Expr
+```	
+
+## Extension Functions
+```kotlin
+>	fun Int.r(): RationalNumber = RationalNumber(this,1)
+	fun Pair<Int, Int>.r(): RationalNumber = RationalNumber(this.component1(),this.component2())
+
+	data class RationalNumber(val numerator: Int, val denominator: Int)
+```	
+
+## Object expressions
+```kotlin
+>	import java.util.*
+
+	fun getList(): List<Int> {
+	    val arrayList = arrayListOf(1, 5, 2)
+	    Collections.sort(arrayList, object : Comparator<Int> {
+	    	override fun compare(x: Int, y: Int) = y - x
+	    })
+	    return arrayList
+	}
+```	
+
+## SAM conversions
+```kotlin
+>	import java.util.*
+
+	fun getList(): List<Int> {
+	    val arrayList = arrayListOf(1, 5, 2)
+	    Collections.sort(arrayList, { x, y -> y-x })
+	    return arrayList
+	}
+```	
+
+## Extension functions on collections
+```kotlin
+>	fun getList(): List<Int> {
+    	return arrayListOf(1, 5, 2).sortedDescending()
+	}
 ```	
 
 ##
@@ -864,17 +925,57 @@ Ommitted
 >	
 ```	
 
-##
-```kotlin
->	
-```	
 
 ##
 ```kotlin
 >	
 ```	
 
+
 ##
+```kotlin
+>	
+```	
+
+#Advent of Code
+--- Day 1: Not Quite Lisp ---
+
+Santa was hoping for a white Christmas, but his weather machine's "snow" function is powered by stars, and he's fresh out! To save Christmas, he needs you to collect fifty stars by December 25th.
+
+Collect stars by helping Santa solve puzzles. Two puzzles will be made available on each day in the advent calendar; the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
+
+Here's an easy puzzle to warm you up.
+
+Santa is trying to deliver presents in a large apartment building, but he can't find the right floor - the directions he got are a little confusing. He starts on the ground floor (floor 0) and then follows the instructions one character at a time.
+
+An opening parenthesis, (, means he should go up one floor, and a closing parenthesis, ), means he should go down one floor.
+
+The apartment building is very tall, and the basement is very deep; he will never find the top or bottom floors.
+
+For example:
+
+(()) and ()() both result in floor 0.
+((( and (()(()( both result in floor 3.
+))((((( also results in floor 3.
+()) and ))( both result in floor -1 (the first basement level).
+))) and )())()) both result in floor -3.
+To what floor do the instructions take Santa?
+
+Your puzzle answer was 138.
+
+The first half of this puzzle is complete! It provides one gold star: *
+
+--- Part Two ---
+
+Now, given the same instructions, find the position of the first character that causes him to enter the basement (floor -1). The first character in the instructions has position 1, the second character has position 2, and so on.
+
+For example:
+
+) causes him to enter the basement at character position 1.
+()()) causes him to enter the basement at character position 5.
+What is the position of the character that causes Santa to first enter the basement?
+
+
 ```kotlin
 >	
 ```	
