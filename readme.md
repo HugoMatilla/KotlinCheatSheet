@@ -920,62 +920,127 @@ Ommitted
 	}
 ```	
 
-##
+# Conventions
+## Comparison
 ```kotlin
->	
+>	data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int) : Comparable<MyDate> {
+	    override fun compareTo(other: MyDate) = when {
+	        year != other.year -> year - other.year
+	        month != other.month -> month - other.month
+	        else -> dayOfMonth - other.dayOfMonth
+	    }
+}
+```	
+
+## In range
+```kotlin
+>	class DateRange(val start: MyDate, val endInclusive: MyDate){
+		operator fun contains(item: MyDate): Boolean = start <= item && item <= endInclusive
+	}        
+	    
+
+	fun checkInRange(date: MyDate, first: MyDate, last: MyDate): Boolean {
+	    return date in DateRange(first, last)
+	}
 ```	
 
 
 ##
 ```kotlin
->	
+>	operator fun MyDate.rangeTo(other: MyDate) = DateRange(this, other)
+
+	class DateRange(override val start: MyDate, override val endInclusive: MyDate): ClosedRange<MyDate> 
+
+	data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int) : Comparable<MyDate>{
+	    override fun compareTo(other: MyDate): Int{
+	        if(year != other.year) return year - other.year
+	        if(month != other.month) return month - other.month
+	        return dayOfMonth - other.dayOfMonth
+	    }
+	}
+
+	fun checkInRange(date: MyDate, first: MyDate, last: MyDate): Boolean {
+	    return date in first..last
+	}
 ```	
 
+
+## For loop
+```kotlin
+>	class DateRange(val start: MyDate, val end: MyDate): Iterable<MyDate>{
+	    override fun iterator(): Iterator<MyDate> = DateIterator(this)
+	}
+
+	class DateIterator(val dateRange:DateRange) : Iterator<MyDate> {
+	    var current: MyDate = dateRange.start
+	    override fun next(): MyDate {
+	        val result = current
+	        current = current.nextDay()
+	        return result
+	    }
+	    override fun hasNext(): Boolean = current <= dateRange.end
+	}
+
+	fun iterateOverDateRange(firstDate: MyDate, secondDate: MyDate, handler: (MyDate) -> Unit) {
+	    for (date in firstDate..secondDate) {
+	        handler(date)
+	    }
+	}
+```	
+## Operators overloading
+
+```kotlin
+>	operator fun MyDate.plus(timeInterval: TimeInterval) = addTimeIntervals(timeInterval, 1)
+
+	class RepeatedTimeInterval(val timeInterval: TimeInterval, val number: Int)
+	operator fun TimeInterval.times(number: Int) = RepeatedTimeInterval(this, number)
+
+	operator fun MyDate.plus(timeIntervals: RepeatedTimeInterval) = addTimeIntervals(timeIntervals.timeInterval, timeIntervals.number)
+```	
+
+
+## Destructuring declarations
+```kotlin
+>	data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int)
+
+	fun isLeapDay(date: MyDate): Boolean {
+
+	    val (year, month, dayOfMonth) = date
+
+	    // 29 February of a leap year
+	    return year % 4 == 0 && month == 2 && dayOfMonth == 29
+	}
+```	
+
+## Invoke
+```kotlin
+>	class Invokable {
+    public var numberOfInvocations: Int = 0
+        private set
+    operator public fun invoke(): Invokable {
+        numberOfInvocations++
+        return this  }
+}
+
+	fun invokeTwice(invokable: Invokable) = invokable()()
+```	
 
 ##
 ```kotlin
 >	
 ```	
 
-#Advent of Code
---- Day 1: Not Quite Lisp ---
+##
+```kotlin
+>	
+```	
 
-Santa was hoping for a white Christmas, but his weather machine's "snow" function is powered by stars, and he's fresh out! To save Christmas, he needs you to collect fifty stars by December 25th.
+##
+```kotlin
+>	
+```	
 
-Collect stars by helping Santa solve puzzles. Two puzzles will be made available on each day in the advent calendar; the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
-
-Here's an easy puzzle to warm you up.
-
-Santa is trying to deliver presents in a large apartment building, but he can't find the right floor - the directions he got are a little confusing. He starts on the ground floor (floor 0) and then follows the instructions one character at a time.
-
-An opening parenthesis, (, means he should go up one floor, and a closing parenthesis, ), means he should go down one floor.
-
-The apartment building is very tall, and the basement is very deep; he will never find the top or bottom floors.
-
-For example:
-
-(()) and ()() both result in floor 0.
-((( and (()(()( both result in floor 3.
-))((((( also results in floor 3.
-()) and ))( both result in floor -1 (the first basement level).
-))) and )())()) both result in floor -3.
-To what floor do the instructions take Santa?
-
-Your puzzle answer was 138.
-
-The first half of this puzzle is complete! It provides one gold star: *
-
---- Part Two ---
-
-Now, given the same instructions, find the position of the first character that causes him to enter the basement (floor -1). The first character in the instructions has position 1, the second character has position 2, and so on.
-
-For example:
-
-) causes him to enter the basement at character position 1.
-()()) causes him to enter the basement at character position 5.
-What is the position of the character that causes Santa to first enter the basement?
-
-
+##
 ```kotlin
 >	
 ```	
