@@ -4,7 +4,8 @@ We declare a package-level function main which returns Unit and takes
 an Array of strings as a parameter. Note that semicolons are optional.
 
 ``` kotlin
->	fun main(args: Array<String>) {
+
+	fun main(args: Array<String>) {
     	println("Hello, world!")
 	}
 ```
@@ -18,7 +19,8 @@ http://kotlinlang.org/docs/reference/basic-types.html#arrays
 
 
 ``` kotlin
->	fun main(args: Array<String>) {
+
+	fun main(args: Array<String>) {
 	    if (args.size == 0) {
 	        println("Please provide a name as a command-line argument")
 	        return
@@ -34,7 +36,8 @@ See http://kotlinlang.org/docs/reference/basic-syntax.html#using-a-for-loop
 
 
 ``` kotlin
->	fun main(args: Array<String>) {
+
+	fun main(args: Array<String>) {
 	    for (name in args)
 	        println("Hello, $name!")
 	    
@@ -50,7 +53,8 @@ See http://kotlinlang.org/docs/reference/control-flow.html#when-expression
 
 
 ``` kotlin
->	fun main(args: Array<String>) {
+
+	fun main(args: Array<String>) {
 	    val language = if (args.size == 0) "EN" else args[0]
 	    println(when (language) {
 	        "EN" -> "Hello!"
@@ -68,7 +72,8 @@ See http://kotlinlang.org/docs/reference/classes.html#classes
 
 
 ``` kotlin
->	class Greeter(val name: String) {
+
+	class Greeter(val name: String) {
 		fun greet() {
 		    println("Hello, ${name}");
 		}
@@ -86,7 +91,8 @@ because ordinary `if` works fine in this role.
 See http://kotlinlang.org/docs/reference/control-flow.html#if-expression
 
 ``` kotlin
->	fun main(args: Array<String>) {
+
+	fun main(args: Array<String>) {
     	println(max(Integer.parseInt(args[0]), Integer.parseInt(args[1])))
 	}
 
@@ -99,7 +105,8 @@ A reference must be explicitly marked as nullable to be able hold a null.
 See http://kotlinlang.org/docs/reference/null-safety.html#null-safety
 
 ``` kotlin
->	package multiplier
+
+	package multiplier
 
 	// Return null if str does not hold a number
 	fun parseInt(str: String): Int? {
@@ -136,7 +143,8 @@ http://kotlinlang.org/docs/reference/classes.html#classes-and-inheritance
 http://kotlinlang.org/docs/reference/typecasts.html#smart-casts
 
 ``` kotlin
->	fun main(args: Array<String>) {
+
+	fun main(args: Array<String>) {
 		println(getStringLength("aaa"))
     	println(getStringLength(1))
 	}
@@ -151,7 +159,8 @@ http://kotlinlang.org/docs/reference/typecasts.html#smart-casts
 See http://kotlinlang.org/docs/reference/control-flow.html#while-loops
 
 ``` kotlin
->	fun main(args: Array<String>) {
+
+	fun main(args: Array<String>) {
     var i = 0
     while (i < args.size)
         println(args[i++])
@@ -166,7 +175,8 @@ See http://kotlinlang.org/docs/reference/ranges.html#ranges
 
 
 ``` kotlin
->	fun main(args: Array<String>) {
+
+	fun main(args: Array<String>) {
     val x = Integer.parseInt(args[0])
     //Check if a number lies within a range:
     val y = 10
@@ -203,7 +213,8 @@ See http://kotlinlang.org/docs/reference/control-flow.html#when-expression
 
 
 ``` kotlin
->	fun main(args: Array<String>) {
+
+	fun main(args: Array<String>) {
     cases("Hello")
     cases(1)
     cases(System.currentTimeMillis())
@@ -235,7 +246,8 @@ functions can be called on it.
 See http://kotlinlang.org/docs/reference/multi-declarations.html#multi-declarations
  
 ``` kotlin
->	fun main(args: Array<String>) {
+
+	fun main(args: Array<String>) {
 	    val pair = Pair(1, "one")
 
 	    val (num, name) = pair
@@ -260,7 +272,8 @@ other goodies common for data _toString()_, _equals()_, _hashCode()_ and _copy()
 See http://kotlinlang.org/docs/reference/data-classes.html#data-classes
  
 ``` kotlin
->	data class User(val name: String, val id: Int)
+
+	data class User(val name: String, val id: Int)
 
 	fun getUser(): User {
 	    return User("Alex", 1)
@@ -287,7 +300,8 @@ See http://kotlinlang.org/docs/reference/data-classes.html#data-classes
  Kotlin Standart Library provide component functions for Map.Entry
  
 ``` kotlin
->	fun main(args: Array<String>) {
+
+	fun main(args: Array<String>) {
 	    val map = hashMapOf<String, Int>()
 	    map.put("one", 1)
 	    map.put("two", 2)
@@ -305,7 +319,8 @@ _component functions_, _toString()_, _equals()_, _hashCode()_ and _copy()_.
 See http://kotlinlang.org/docs/reference/data-classes.html#data-classes
  
 ``` kotlin
->	data class User(val name: String, val id: Int)
+
+	data class User(val name: String, val id: Int)
 
 	fun main(args: Array<String>) {
 	    val user = User("Alex", 1)
@@ -335,7 +350,8 @@ Property delegates don't have to implement any interface, but they have
 to provide methods named get() and set() to be called.
  
 ``` kotlin
->	import kotlin.reflect.KProperty
+
+	import kotlin.reflect.KProperty
 
 	class Example {
 	    var p: String by Delegate()
@@ -369,7 +385,8 @@ If you want thread safety, use blockingLazy() instead: it guarantees that the va
 be computed only in one thread, and that all threads will see the same value.
  
 ``` kotlin
->	class LazySample {
+
+	class LazySample {
 	    val lazy: String by lazy {
 	        println("computed!")
 	        "my lazy"
@@ -391,7 +408,8 @@ a property being assigned to, the old value and the new one. If you want to be a
 the assignment, use vetoable() instead of observable().
 
 ``` kotlin
->	import kotlin.properties.Delegates
+
+	import kotlin.properties.Delegates
 
 	class User {
 	    var name: String by Delegates.observable("no name") {
@@ -416,7 +434,8 @@ to handle this. If you read from this property before writing to it, it throws a
 after the first assignment it works as expected.
  
 ``` kotlin
->	import kotlin.properties.Delegates
+
+	import kotlin.properties.Delegates
 
 	class User {
 	    var name: String by Delegates.notNull()
@@ -442,7 +461,8 @@ names of properties). Of course, you can have var's as well (add import kotlin.p
 that will modify the map upon assignment (note that you'd need MutableMap instead of read-only Map).
 
 ``` kotlin
->	import kotlin.properties.getValue
+
+	import kotlin.properties.getValue
 
 	class User(val map: Map<String, Any?>) {
 	    val name: String by map
@@ -468,7 +488,8 @@ The answer is: "you prefix it with a `::`".
 
 
 ``` kotlin
->	fun main(args: Array<String>) {
+
+	fun main(args: Array<String>) {
 	    val numbers = listOf(1, 2, 3)
 	    println(numbers.filter(::isOdd))
 	}
@@ -483,7 +504,8 @@ Now, you can apply it to callable references.
 
 
 ``` kotlin
->	fun main(args: Array<String>) {
+
+	fun main(args: Array<String>) {
 	    val oddLength = compose(::isOdd, ::length)
 	    val strings = listOf("a", "ab", "abc")
 	    println(strings.filter(oddLength))
@@ -519,7 +541,8 @@ The point is to print out a song with the following lyrics:
 Additionally, you can pass the desired initial number of bottles to use (rather than 99)
 as a command-line argument 
 ``` kotlin
->	package bottles
+
+	package bottles
 
 	fun main(args: Array<String>) {
 	    if (args.isEmpty) {
@@ -577,7 +600,8 @@ See this page for details:
 http://kotlinlang.org/docs/reference/type-safe-builders.html
 
 ``` kotlin
->	package html
+
+	package html
 
 	fun main(args: Array<String>) {
 	    val result =
@@ -723,7 +747,8 @@ Your task is to implement the sum() function so that it computes the sum of
 all elements in the given array a.
 
 ```kotlin
->	package sum
+
+	package sum
 
 	fun sum(a: IntArray): Int {
 	    var result=0
@@ -736,7 +761,8 @@ all elements in the given array a.
 Your task is to implement the indexOfMax() function so that it returns
 the index of the largest element in the array, or null if the array is empty.
 ```kotlin
->	package maxindex
+
+	package maxindex
 
 	fun indexOfMax(a: IntArray): Int? {
 	    var maxNumber = Integer.MIN_VALUE
@@ -764,7 +790,8 @@ And this one has five runs:  1, 0, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0
 Your task is to implement the runs() function so that it returns the number of runs in the given array.
 
 ```kotlin
->	package runs
+
+	package runs
 
 	fun runs(a: IntArray): Int {
 		if (a.size==0)
@@ -798,7 +825,8 @@ A hint: there's a solution that looks at each element only once and uses no
 data structures like collections or trees.
 
 ```kotlin
->	package pairless
+
+	package pairless
 
 	fun findPairless(a: IntArray): Int {
 	    val distinctElements = a.distinct()
@@ -815,7 +843,8 @@ Ommitted
 #Koans
 ## joinOptions
 ```kotlin
->	fun joinOptions(options: Collection<String>) = options.joinToString(", ","[","]")
+
+	fun joinOptions(options: Collection<String>) = options.joinToString(", ","[","]")
 ```
 ##Default arguments
 
@@ -833,12 +862,14 @@ Ommitted
 ```
 ## Lambdas
 ```kotlin
->	fun containsEven(collection: Collection<Int>): Boolean = collection.any { it.mod(2) == 0 }
+
+	fun containsEven(collection: Collection<Int>): Boolean = collection.any { it.mod(2) == 0 }
 ```	
 
 ## Strings
 ```kotlin
->	val s = "abc"
+
+	val s = "abc"
 	val str = "$s.length is ${s.length}" // evaluates to "abc.length is 3"
 	...
 	val month = "(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)"
@@ -847,7 +878,8 @@ Ommitted
 
 ## Data classes
 ```kotlin
->	data class Person (var name: String, var age: Int) 
+
+	data class Person (var name: String, var age: Int) 
 
 	fun getPeople(): List<Person> {
 	    return listOf(Person("Alice", 29), Person("Bob", 31))
@@ -856,7 +888,8 @@ Ommitted
 
 ##Nullable types
 ```kotlin
->	fun sendMessageToClient(client: Client?, message: String?, mailer: Mailer){
+
+	fun sendMessageToClient(client: Client?, message: String?, mailer: Mailer){
 		    val mail = client?.personalInfo?.email ?: return
 		    if (message!=null)
 			    mailer.sendMessage(mail, message)
@@ -869,7 +902,8 @@ Ommitted
 
 ## Smart Cast
 ```kotlin
->	fun eval(expr: Expr): Int =
+
+	fun eval(expr: Expr): Int =
         when (expr) {
             is Num -> expr.value
             is Sum -> eval(expr.left) + eval(expr.right) 
@@ -883,7 +917,8 @@ Ommitted
 
 ## Extension Functions
 ```kotlin
->	fun Int.r(): RationalNumber = RationalNumber(this,1)
+
+	fun Int.r(): RationalNumber = RationalNumber(this,1)
 	fun Pair<Int, Int>.r(): RationalNumber = RationalNumber(this.component1(),this.component2())
 
 	data class RationalNumber(val numerator: Int, val denominator: Int)
@@ -891,7 +926,8 @@ Ommitted
 
 ## Object expressions
 ```kotlin
->	import java.util.*
+
+	import java.util.*
 
 	fun getList(): List<Int> {
 	    val arrayList = arrayListOf(1, 5, 2)
@@ -904,7 +940,8 @@ Ommitted
 
 ## SAM conversions
 ```kotlin
->	import java.util.*
+
+	import java.util.*
 
 	fun getList(): List<Int> {
 	    val arrayList = arrayListOf(1, 5, 2)
@@ -915,7 +952,8 @@ Ommitted
 
 ## Extension functions on collections
 ```kotlin
->	fun getList(): List<Int> {
+
+	fun getList(): List<Int> {
     	return arrayListOf(1, 5, 2).sortedDescending()
 	}
 ```	
@@ -923,7 +961,8 @@ Ommitted
 # Conventions
 ## Comparison
 ```kotlin
->	data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int) : Comparable<MyDate> {
+
+	data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int) : Comparable<MyDate> {
 	    override fun compareTo(other: MyDate) = when {
 	        year != other.year -> year - other.year
 	        month != other.month -> month - other.month
@@ -934,7 +973,8 @@ Ommitted
 
 ## In range
 ```kotlin
->	class DateRange(val start: MyDate, val endInclusive: MyDate){
+
+	class DateRange(val start: MyDate, val endInclusive: MyDate){
 		operator fun contains(item: MyDate): Boolean = start <= item && item <= endInclusive
 	}        
 	    
@@ -947,7 +987,8 @@ Ommitted
 
 ##
 ```kotlin
->	operator fun MyDate.rangeTo(other: MyDate) = DateRange(this, other)
+
+	operator fun MyDate.rangeTo(other: MyDate) = DateRange(this, other)
 
 	class DateRange(override val start: MyDate, override val endInclusive: MyDate): ClosedRange<MyDate> 
 
@@ -967,7 +1008,8 @@ Ommitted
 
 ## For loop
 ```kotlin
->	class DateRange(val start: MyDate, val end: MyDate): Iterable<MyDate>{
+
+	class DateRange(val start: MyDate, val end: MyDate): Iterable<MyDate>{
 	    override fun iterator(): Iterator<MyDate> = DateIterator(this)
 	}
 
@@ -990,7 +1032,8 @@ Ommitted
 ## Operators overloading
 
 ```kotlin
->	operator fun MyDate.plus(timeInterval: TimeInterval) = addTimeIntervals(timeInterval, 1)
+
+	operator fun MyDate.plus(timeInterval: TimeInterval) = addTimeIntervals(timeInterval, 1)
 
 	class RepeatedTimeInterval(val timeInterval: TimeInterval, val number: Int)
 	operator fun TimeInterval.times(number: Int) = RepeatedTimeInterval(this, number)
@@ -1001,7 +1044,8 @@ Ommitted
 
 ## Destructuring declarations
 ```kotlin
->	data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int)
+
+	data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int)
 
 	fun isLeapDay(date: MyDate): Boolean {
 
@@ -1014,33 +1058,38 @@ Ommitted
 
 ## Invoke
 ```kotlin
->	class Invokable {
-    public var numberOfInvocations: Int = 0
-        private set
-    operator public fun invoke(): Invokable {
-        numberOfInvocations++
-        return this  }
-}
+
+	class Invokable {
+	public var numberOfInvocations: Int = 0
+	    private set
+	operator public fun invoke(): Invokable {
+	    numberOfInvocations++
+	    return this  }
+	}
 
 	fun invokeTwice(invokable: Invokable) = invokable()()
 ```	
 
 ##
 ```kotlin
->	
+
+	
 ```	
 
 ##
 ```kotlin
->	
+
+	
 ```	
 
 ##
 ```kotlin
->	
+
+	
 ```	
 
 ##
 ```kotlin
->	
+
+	
 ```	
