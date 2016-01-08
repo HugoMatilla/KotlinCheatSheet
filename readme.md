@@ -1134,7 +1134,7 @@ Default collections in Kotlin are Java collections, but there are lots of useful
 	fun Shop.findAnyCustomerFrom(city: City): Customer? = customers.find{it.city== city}
 ```	
 
-## FlatMap
+## _flatMap_
 ```kotlin
 
 	val result = listOf("abc", "12").flatMap { it.toCharList() }
@@ -1148,7 +1148,7 @@ Default collections in Kotlin are Java collections, but there are lots of useful
 
 ```	
 
-## Max & Min
+## _max_, _min_, _maxBy_ and _minBy_
 ```kotlin
 	
 	listOf(1, 42, 4).max() == 42
@@ -1162,7 +1162,7 @@ Default collections in Kotlin are Java collections, but there are lots of useful
 	
 ```	
 
-## Sort
+## _sort_
 ```kotlin
 
 	listOf("bbb", "a", "cc").sorted() == listOf("a", "bbb", "cc")
@@ -1173,7 +1173,7 @@ Default collections in Kotlin are Java collections, but there are lots of useful
 	
 ```	
 
-## Sum
+## _sum_
 ```kotlin
 
 	listOf(1, 5, 3).sum() == 9
@@ -1184,7 +1184,7 @@ Default collections in Kotlin are Java collections, but there are lots of useful
 	fun Customer.getTotalOrderPrice(): Double = orders.flatMap{it.products}.sumByDouble{it.price}
 ```	
 
-## Group By
+## _groupBy_
 ```kotlin
 
 	val result = listOf("a", "b", "ba", "ccc", "ad").groupBy { it.length() }
@@ -1195,7 +1195,7 @@ Default collections in Kotlin are Java collections, but there are lots of useful
 	
 ```	
 
-## Partition
+## _partition_
 ```kotlin
 
 	val numbers = listOf(1, 3, -4, 2, -11)
@@ -1211,7 +1211,7 @@ Default collections in Kotlin are Java collections, but there are lots of useful
 	
 ```	
 
-## Fold
+## _fold_
 ```kotlin
 
 	listOf(1, 2, 3, 4).fold(1, {
@@ -1220,11 +1220,11 @@ Default collections in Kotlin are Java collections, but there are lots of useful
 	}) == 24
 
 	fun Shop.getSetOfProductsOrderedByEveryCustomer(): Set<Product> {
-    val allProducts = customers.flatMap { it.orders.flatMap { it.products }}.toSet()
-    return customers.fold(allProducts, {
-        orderedByAll, customer ->
-        orderedByAll.intersect(customer.orders.flatMap { it.products }.toSet())
-    })
-}
+	    val allProducts = customers.flatMap { it.orders.flatMap { it.products }}.toSet()
+	    return customers.fold(allProducts, {
+	        orderedByAll, customer ->
+	        orderedByAll.intersect(customer.orders.flatMap { it.products }.toSet())
+	    })
+	}
 	
 ```	
