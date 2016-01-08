@@ -1069,27 +1069,162 @@ Ommitted
 
 	fun invokeTwice(invokable: Invokable) = invokable()()
 ```	
+# Collections
+## Introduction
+Default collections in Kotlin are Java collections, but there are lots of useful extension functions for them. For example, operations that transform a collection to another one, starting with 'to': `toSet` or `toList`.
 
-##
+```java
+
+	data class Shop(val name: String, val customers: List<Customer>)
+
+	data class Customer(val name: String, val city: City, val orders: List<Order>) {
+	    override fun toString() = "$name from ${city.name}"
+	}
+
+	data class Order(val products: List<Product>, val isDelivered: Boolean)
+
+	data class Product(val name: String, val price: Double) {
+	    override fun toString() = "'$name' for $price"
+	}
+
+	data class City(val name: String) {
+	    override fun toString() = name
+	}
+```
+
 ```kotlin
 
+	fun Shop.getSetOfCustomers(): Set<Customer> = this.customers.toSet()
+```	
+
+## _filter_  _map_
+```kotlin
+
+	val numbers = listOf(1, -1, 2)
+	numbers.filter { it > 0 } == listOf(1, 2)
+	numbers.map { it * it } == listOf(1, 1, 4)
+
+	// Return the set of cities the customers are from
+	fun Shop.getCitiesCustomersAreFrom(): Set<City> = customers.map {it.city}.toSet()
+
+	// Return a list of the customers who live in the given city
+	fun Shop.getCustomersFrom(city: City): List<Customer> = this.customers.filter {it.city == city}
+```	
+
+## _all_, _any_ _count_ and _find_
+```kotlin
+
+	val numbers = listOf(-1, 0, 2)
+	val isZero: (Int) -> Boolean = { it == 0 }
+	numbers.any(isZero) == true
+	numbers.all(isZero) == false
+	numbers.count(isZero) == 1
+	numbers.find { it > 0 } == 2
+
+	// Return true if all customers are from the given city
+	fun Shop.checkAllCustomersAreFrom(city: City): Boolean = customers.all{it.city== city}
+
+	// Return true if there is at least one customer from the given city
+	fun Shop.hasCustomerFrom(city: City): Boolean = customers.any{it.city== city}
+
+	// Return the number of customers from the given city
+	fun Shop.countCustomersFrom(city: City): Int = customers.count{it.city== city}
+
+	// Return a customer who lives in the given city, or null if there is none
+	fun Shop.findAnyCustomerFrom(city: City): Customer? = customers.find{it.city== city}
+```	
+
+## FlatMap
+```kotlin
+
+	val result = listOf("abc", "12").flatMap { it.toCharList() }
+	result == listOf('a', 'b', 'c', '1', '2')
+
+	// Return all products this customer has ordered
+	fun Customer.getOrderedProducts(): Set<Product> = orders.flatMap{it.products}.toSet()
+
+	// Return all products that were ordered by at least one customer
+	fun Shop.getAllOrderedProducts(): Set<Product> = customers.flatMap{it.getOrderedProducts()}.toSet()
+
+```	
+
+## Max & Min
+```kotlin
+	
+	listOf(1, 42, 4).max() == 42
+	listOf("a", "ab").minBy { it.length } == "a"
+
+	// Return a customer whose order count is the highest among all customers
+	fun Shop.getCustomerWithMaximumNumberOfOrders(): Customer? = customers.maxBy {it.orders.size}
+
+	// Return the most expensive product which has been ordered
+	fun Customer.getMostExpensiveOrderedProduct(): Product? = orders.flatMap{it.products}.maxBy{it.price}
 	
 ```	
 
-##
+## Sort
 ```kotlin
 
+	listOf("bbb", "a", "cc").sorted() == listOf("a", "bbb", "cc")
+	listOf("bbb", "a", "cc").sortedBy { it.length } == listOf("a", "cc", "bbb")
+
+	// Return a list of customers, sorted by the ascending number of orders they made
+	fun Shop.getCustomersSortedByNumberOfOrders(): List<Customer> = customers.sortedBy{it.orders.size}
 	
 ```	
 
-##
+## Sum
 ```kotlin
 
+	listOf(1, 5, 3).sum() == 9
+	listOf("a", "b", "cc").sumBy { it.length() } == 4
+
+	// Return the sum of prices of all products that a customer has ordered.
+	// Note: the customer may order the same product for several times.
+	fun Customer.getTotalOrderPrice(): Double = orders.flatMap{it.products}.sumByDouble{it.price}
+```	
+
+## Group By
+```kotlin
+
+	val result = listOf("a", "b", "ba", "ccc", "ad").groupBy { it.length() }
+	result == mapOf(1 to listOf("a", "b"), 2 to listOf("ba", "ad"), 3 to listOf("ccc"))
+
+	// Return a map of the customers living in each city
+	fun Shop.groupCustomersByCity(): Map<City, List<Customer>> = customers.groupBy{it.city}
 	
 ```	
 
-##
+## Partition
 ```kotlin
 
+	val numbers = listOf(1, 3, -4, 2, -11)
+	val (positive, negative) = numbers.partition { it > 0 }
+	positive == listOf(1, 3, 2)
+	negative == listOf(-4, -11)
+
+	// Return customers who have more undelivered orders than delivered
+	fun Shop.getCustomersWithMoreUndeliveredOrdersThanDelivered(): Set<Customer> = customers.filter{
+	    val (delivered, undelivered) = it.orders.partition { it.isDelivered }
+	    undelivered.size > delivered.size
+	}.toSet()
+	
+```	
+
+## Fold
+```kotlin
+
+	listOf(1, 2, 3, 4).fold(1, {
+	    partProduct, element ->
+	    element * partProduct
+	}) == 24
+
+	fun Shop.getSetOfProductsOrderedByEveryCustomer(): Set<Product> {
+    val allProducts = customers.flatMap { it.orders.flatMap { it.products }}.toSet()
+    return customers.fold(allProducts, {
+        orderedByAll, customer ->
+        orderedByAll.intersect(customer.orders.flatMap { it.products }.toSet())
+    })
+}
 	
 ```	
