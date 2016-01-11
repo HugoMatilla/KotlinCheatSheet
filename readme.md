@@ -1228,3 +1228,93 @@ Default collections in Kotlin are Java collections, but there are lots of useful
 	}
 	
 ```	
+
+## Compound tasks
+```kotlin
+
+	fun Customer.getMostExpensiveDeliveredProduct(): Product? {
+	    return orders.filter { it.isDelivered }.flatMap { it.products }.maxBy { it.price }
+	}
+
+	fun Shop.getNumberOfTimesProductWasOrdered(product: Product): Int {
+	    return customers.flatMap { it.getOrderedProductsList() }.count { it == product }
+	}
+
+	fun Customer.getOrderedProductsList(): List<Product> {
+	    return orders.flatMap { it.products }
+	}
+```
+
+## Get used to new style
+```kotlin
+
+	fun doSomethingStrangeWithCollection(collection: Collection<String>): Collection<String>? {
+
+	    val groupsByLength = collection. groupBy { s -> s.length }
+
+	    val maximumSizeOfGroup = groupsByLength.values.map { group -> group.size }.max()
+
+	    return groupsByLength.values.firstOrNull { group -> group.size == maximumSizeOfGroup }
+	}
+```
+# Properties
+## Properties
+```kotlin
+
+	class PropertyExample() {
+	    var counter = 0
+	    var propertyWithCounter: Int? = null
+	    	set(v:Int?) {
+	            field = v
+	   			counter++
+	        }
+	}
+
+```
+## Lazy property
+```kotlin
+	
+	class LazyProperty(val initializer: () -> Int) {
+    var value: Int? = null
+    val lazy: Int
+        get() {
+            if (value == null) {
+                value = initializer()
+            }
+            return value!!
+        }
+}
+```
+## Delegates example
+```kotlin
+
+	class LazyProperty(val initializer: () -> Int) {
+	    val lazyValue: Int by lazy(initializer)
+	}
+
+```
+##
+```kotlin
+
+
+```
+##
+```kotlin
+
+
+```
+##
+```kotlin
+
+
+```
+##
+```kotlin
+
+
+```
+##
+```kotlin
+
+
+```
