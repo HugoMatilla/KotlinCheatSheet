@@ -1293,28 +1293,249 @@ Default collections in Kotlin are Java collections, but there are lots of useful
 	}
 
 ```
-##
+## Delegates how it works
 ```kotlin
 
+	
+	class EffectiveDate<R> : ReadWriteProperty<R, MyDate> {
 
+	    var timeInMillis: Long? = null
+
+	    override fun getValue(thisRef: R, property: KProperty<*>): MyDate = timeInMillis!!.toDate()
+
+	    override fun setValue(thisRef: R, property: KProperty<*>, value: MyDate) {
+	        timeInMillis = value.toMillis()
+	    }
+	}
+```
+## Extension function literals
+A higher-order function is a function that takes functions as parameters, or returns a function. 
+```kotlin
+
+	fun task(): List<Boolean> {
+	    val isEven: Int.() -> Boolean = { this % 2 == 0 }
+	    val isOdd: Int.() -> Boolean = { this % 2 != 0 }
+
+	    return listOf(42.isOdd(), 239.isOdd(), 294823098.isEven())
+	}
 ```
 ##
 ```kotlin
 
+	fun buildString(build: StringBuilder.() -> Unit): String {
+	    val stringBuilder = StringBuilder()
+	    stringBuilder.build()
+	    return stringBuilder.toString()
+	}
+
+	val s = buildString {
+	    this.append("Numbers: ")
+	    for (i in 1..3) {
+	        // 'this' can be omitted
+	        append(i)
+	    }
+	}
+
+	s == "Numbers: 123"
+
+	---
+
+	import java.util.HashMap
+
+	fun <K, V> buildMap(build: HashMap<K, V>.() -> Unit): Map<K, V> {
+	    val map = HashMap<K, V>()
+	    map.build()
+	    return map
+	}
+
+
+	fun usage(): Map<Int, String> {
+	    return buildMap {
+	        put(0, "0")
+	        for (i in 1..10) {
+	            put(i, "$i")
+	        }
+	    }
+	}
 
 ```
+## The function apply
+```kotlin
+
+	fun <T> T.myApply(f: T.() -> Unit): T { f(); return this } 
+
+	fun buildString(): String {
+	    return StringBuilder().myApply {
+	        append("Numbers: ")
+	        for (i in 1..10) {
+	            append(i)
+	        }
+	    }.toString()
+	}
+
+
+
+	fun buildMap(): Map<Int, String> {
+	    return hashMapOf<Int, String>().myApply {
+	        put(0, "0")
+	        for (i in 1..10) {
+	            put(i, "$i")
+	        }
+	    }
+	}
+```
+## Html builder
+```kotlin
+	
+	fun renderProductTable(): String {
+	    return html {
+	        table {
+	            tr (color = getTitleColor()) {
+	                td {
+	                    text("Product")
+	                }
+	                td {
+	                    text("Price")
+	                }
+	                td {
+	                    text("Popularity")
+	                }
+	            }
+	            val products = getProducts()
+	            for ((index, product) in products.withIndex()) {
+	                tr {
+	                    td (color = getCellColor(index, 0)) {
+	                        text(product.description)
+	                    }
+	                    td (color = getCellColor(index, 1)) {
+	                        text(product.price)
+	                    }
+	                    td (color = getCellColor(index, 2)) {
+	                        text(product.popularity)
+	                    }
+	                }
+	            }
+	        }
+	    }.toString()
+	}
+
+```
+
 ##
 ```kotlin
 
+	Look at the questions below and give your answers
 
+	1. In the Kotlin code
+
+	tr {
+	    td {
+	        text("Product")
+	    }
+	    td {
+	        text("Popularity")
+	    }
+	}
+	'td' is:
+
+	a. special built-in syntactic construct
+
+	b. function declaration
+
+	c. function invocation
+
+	---------------------
+
+	2. In the Kotlin code
+
+	tr (color = "yellow") {
+	    td {
+	        text("Product")
+	    }
+	    td {
+	        text("Popularity")
+	    }
+	}
+	'color' is:
+
+	a. new variable declaration
+
+	b. argument name
+
+	c. argument value
+
+	---------------------
+	
+	3. The block
+
+	{
+	    text("Product")
+	}
+	from the previous question is:
+
+	a. block inside built-in syntax construction td
+
+	b. function literal (or "lambda")
+
+	c. something mysterious
+
+	---------------------
+	
+	4. For the code
+
+	tr (color = "yellow") {
+	    this.td {
+	        text("Product")
+	    }
+	    td {
+	        text("Popularity")
+	    }
+	}
+	which of the following is true:
+
+	a. this code doesn't compile
+
+	b. this refers to an instance of an outer class
+
+	c. this refers to a receiver parameter TR of the function literal:
+
+	tr (color = "yellow") { TR.(): Unit ->
+	      this.td {
+	          text("Product")
+	      }
+	}
+
+	1 to c, 2 to b, 3 to b, 4 to c
 ```
-##
+
+## Generic functions
 ```kotlin
+	
+	import java.util.*
 
+	fun <T, C: MutableCollection<T>> Collection<T>.partitionTo(first: C, second: C, predicate: (T) -> Boolean): Pair<C, C> {
+	    for (element in this) {
+	        if (predicate(element)) {
+	            first.add(element)
+	        } else {
+	            second.add(element)
+	        }
+	    }
+	    return Pair(first, second)
+	}
 
-```
-##
-```kotlin
+	fun partitionWordsAndLines() {
+	    val (words, lines) = listOf("a", "a b", "c", "d e").
+	            partitionTo(ArrayList<String>(), ArrayList()) { s -> !s.contains(" ") }
+	    words == listOf("a", "c")
+	    lines == listOf("a b", "d e")
+	}
 
+	fun partitionLettersAndOtherSymbols() {
+	    val (letters, other) = setOf('a', '%', 'r', '}').
+	            partitionTo(HashSet<Char>(), HashSet()) { c -> c in 'a'..'z' || c in 'A'..'Z'}
+	    letters == setOf('a', 'r')
+	    other == setOf('%', '}')
+	}
 
 ```
