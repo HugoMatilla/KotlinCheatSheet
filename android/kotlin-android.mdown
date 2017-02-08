@@ -649,7 +649,7 @@ have two pairs with the same key in a map.
 
 ##18.1 Aggregate operations
 
-**any**
+####**any**
 Returns _true_ if at least one element matches the given predicate.
 ```kotlin
 
@@ -658,82 +658,82 @@ Returns _true_ if at least one element matches the given predicate.
 	assertFalse(list.any { it > 10 })
 ```
 
-**all**
+####**all**
 Returns _true_ if all the elements match the given predicate.
 
 `assertTrue(list.all { it < 10 })`
 
 `assertFalse(list.all { it % 2 == 0 })`
 
-**count**
+####**count**
 Returns the number of elements matching the given predicate.
 
 `assertEquals(3, list.count { it % 2 == 0 })`
 
-**fold**
+####**fold**
 Accumulates the value starting with an initial value and applying an operation from the first to the last element in a collection.
 
 `assertEquals(25, list.fold(4) { total, next -> total + next })`
 
-**foldRight**
+####**foldRight**
 Same as fold, but it goes from the last element to first.
 
 `assertEquals(25, list.foldRight(4) { total, next -> total + next })`
 
-**forEach**
+####**forEach**
 Performs the given operation to each element.
 
 `list.forEach { println(it) }`
 
-**forEachIndexed**
+####**forEachIndexed**
 
 Same as forEach, though we also get the index of the element.
 
 `list.forEachIndexed { index, value  -> println("position $index contains a $value") }`
 
-**max**
+####**max**
 Returns the largest element or null if there are no elements.
 
 `assertEquals(6, list.max())`
 
-**maxBy**
+####**maxBy**
 Returns the first element yielding the largest value of the given function or null if there are no elements.
 
 // The element whose negative is greater
 
 `assertEquals(1, list.maxBy { -it })`
 
-**min**
+####**min**
 Returns the smallest element or null if there are no elements.
 
 `assertEquals(1, list.min())`
 
-**minBy**
+####**minBy**
 Returns the first element yielding the smallest value of the given function or null if there are no elements.
 
 // The element whose negative is smaller
 
 `assertEquals(6, list.minBy { -it })`
 
-**none**
+####**none**
 Returns true if no elements match the given predicate.
 
 // No elements are divisible by 7
 
 `assertTrue(list.none { it % 7 == 0 })`
 
-**reduce**
+####**reduce**
 Same as fold, but it doesn't use an initial value. It accumulates the value applying an operation from the first to the last element in a collection.
 
 `assertEquals(21, list.reduce { total, next -> total + next })`
 
-**reduceRight**
+####**reduceRight**
 
 Same as reduce, but it goes from the last element to first.
 
 `assertEquals(21, list.reduceRight { total, next -> total + next })`
 
-**sumBy**
+####**sumBy**
 Returns the sum of all values produced by the transform function from the elements in the collection.
 
 `assertEquals(3, list.sumBy { it % 2 })`
@@ -741,136 +741,136 @@ Returns the sum of all values produced by the transform function from the elemen
 
 
 ##18.2 Filtering operations
-**drop**
+####**drop**
 Returns a list containing all elements except first n elements.
 
 `assertEquals(listOf(5, 6), list.drop(4))`
 
-**dropWhile**
+####**dropWhile**
 Returns a list containing all elements except first elements that satisfy the given predicate.
 
 `assertEquals(listOf(3, 4, 5, 6), list.dropWhile { it < 3 })`
 
-**dropLastWhile**
+####**dropLastWhile**
 Returns a list containing all elements except last elements that satisfy the given predicate.
 
 `assertEquals(listOf(1, 2, 3, 4), list.dropLastWhile { it > 4 })`
 
-**filter**
+####**filter**
 Returns a list containing all elements matching the given predicate.
 
 `assertEquals(listOf(2, 4, 6), list.filter { it % 2 == 0 })`
 
-**filterNot**
+####**filterNot**
 Returns a list containing all elements not matching the given predicate.
 
 `assertEquals(listOf(1, 3, 5), list.filterNot { it % 2 == 0 })`
 
-**filterNotNull**
+####**filterNotNull**
 Returns a list containing all elements that are not null.
 
 `assertEquals(listOf(1, 2, 3, 4), listWithNull.filterNotNull())`
 
-**slice**
+####**slice**
 Returns a list containing elements at specified indices.
 
 `assertEquals(listOf(2, 4, 5), list.slice(listOf(1, 3, 4)))`
 
-**take**
+####**take**
 Returns a list containing first n elements.
 
 `assertEquals(listOf(1, 2), list.take(2))`
 
-**takeLast**
+####**takeLast**
 Returns a list containing last n elements.
 
 `assertEquals(listOf(5, 6), list.takeLast(2))`
 
-**takeWhile**
+####**takeWhile**
 Returns a list containing first elements satisfying the given predicate.
 
 `assertEquals(listOf(1, 2), list.takeWhile { it < 3 })`
 
 ##18.3 Mapping operations
 
-**flatMap**
+####**flatMap**
 Iterates over the elements creating a new collection for each one, and finally flattens all the collections into a unique list containing all the elements.
 
 `assertEquals(listOf(1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7), list.flatMap { listOf(it, it + 1) })`
 
-**groupBy**
+####**groupBy**
 Returns a map of the elements in original collection grouped by the result of given function
 
 `assertEquals(mapOf("odd" to listOf(1, 3, 5), "even" to listOf(2, 4, 6)), list.groupBy { if (it % 2 == 0) "even" else "odd" })`
 
-**map**
+####**map**
 Returns a list containing the results of applying the given transform function to each element of the original collection.
 
 `assertEquals(listOf(2, 4, 6, 8, 10, 12), list.map { it * 2 })`
 
-**mapIndexed**
+####**mapIndexed**
 Returns a list containing the results of applying the given transform function to each element and its index of the original collection.
 
 `assertEquals(listOf (0, 2, 6, 12, 20, 30), list.mapIndexed { index, it -> index * it })`
 
-**mapNotNull**
+####**mapNotNull**
 Returns a list containing the results of applying the given transform function to each non-null element of the original collection.
 
 `assertEquals(listOf(2, 4, 6, 8), listWithNull.mapNotNull { it * 2 })`
 
 
 ##18.4 Elements operations
-**contains**
+####**contains**
 Returns true if the element is found in the collection.
 
 `assertTrue(list.contains(2))`
 
-**elementAt**
+####**elementAt**
 Returns an element at the given index or throws an IndexOutOfBoundsException if the index is out of bounds of this collection.
 
 `assertEquals(2, list.elementAt(1))`
 
-**elementAtOrElse**
+####**elementAtOrElse**
 Returns an element at the given index or the result of calling the default function if the index is out of bounds of this collection.
 
 `assertEquals(20, list.elementAtOrElse(10, { 2 * it }))`
 
-**elementAtOrNull**
+####**elementAtOrNull**
 Returns an element at the given index or null if the index is out of bounds of this collection.
 
 `assertNull(list.elementAtOrNull(10))`
 
-**first**
+####**first**
 Returns the first element matching the given predicate
 
 `assertEquals(2, list.first { it % 2 == 0 })`
 
-**firstOrNull**
+####**firstOrNull**
 Returns the first element matching the given predicate, or null if no element was found.
 
 `assertNull(list.firstOrNull { it % 7 == 0 })`
 
-**indexOf**
+####**indexOf**
 Returns the first index of element, or -1 if the collection does not contain element.
 
 `assertEquals(3, list.indexOf(4))`
 
-**indexOfFirst**
+####**indexOfFirst**
 Returns index of the first element matching the given predicate, or -1 if the collection does not contain such element.
 
 `assertEquals(1, list.indexOfFirst { it % 2 == 0 })`
 
-**indexOfLast**
+####**indexOfLast**
 Returns index of the last element matching the given predicate, or -1 if the collection does not contain such element.
 
 `assertEquals(5, list.indexOfLast { it % 2 == 0 })`
 
-**last**
+####**last**
 Returns the last element matching the given predicate.
 
 `assertEquals(6, list.last { it % 2 == 0 })`
 
-**lastIndexOf**
+####**lastIndexOf**
 Returns last index of element, or -1 if the collection does not contain an element.
 
 ```kotlin
@@ -878,7 +878,7 @@ Returns last index of element, or -1 if the collection does not contain an eleme
 	val listRepeated = listOf(2, 2, 3, 4, 5, 5, 6)
 	assertEquals(5, listRepeated.lastIndexOf(5))
 ```
-**lastOrNull**
+####**lastOrNull**
 Returns the last element matching the given predicate, or null if no such element was found.
 
 ```kotlin
@@ -887,18 +887,18 @@ Returns the last element matching the given predicate, or null if no such elemen
 	assertNull(list.lastOrNull { it % 7 == 0 })
 ```
 
-**single**
+####**single**
 Returns the single element matching the given predicate, or throws exception if there is no or more than one matching element.
 
 `assertEquals(5, list.single { it % 5 == 0 })`
 
-**singleOrNull**
+####**singleOrNull**
 Returns the single element matching the given predicate, or null if element was not found or more than one element was found.
 
 `assertNull(list.singleOrNull { it % 7 == 0 })`
 
 ##18.5 Generation operations
-**merge**
+####**merge**
 Returns a list of values built from elements of both collections with same indexes using the provided transform function. The list has the length of shortest collection.
 
 ```kotlin
@@ -908,28 +908,28 @@ Returns a list of values built from elements of both collections with same index
 	assertEquals(listOf(3, 4, 6, 8, 10, 11), list.merge(listRepeated) { it1, it2 ->  it1 + it2 })
 ```
 
-**partition**
+####**partition**
 Splits original collection into pair of collections, where the first collection contains elements for which the predicate returned true, while the second collection contains elements for which the predicate returned false.
 
 `assertEquals(Pair(listOf(2, 4, 6), listOf(1, 3, 5)), list.partition { it % 2 == 0 })`
 
-**plus**
+####**plus**
 Returns a list containing all elements of the original collection and then all elements of the given collection. Because of the name of the function, we can use the ‘+’ operator with it.
 
 `assertEquals(listOf(1, 2, 3, 4, 5, 6, 7, 8), list + listOf(7, 8))`
 
-**zip**
+####**zip**
 Returns a list of pairs built from the elements of both collections with the same indexes. The list has the length of the shortest collection.
 
 `assertEquals(listOf(Pair(1, 7), Pair(2, 8)), list.zip(listOf(7, 8)))`
 
-**unzip**
+####**unzip**
 Generates a Pair of Lists from a List of Pairs
 
 `assertEquals(Pair(listOf(5, 6), listOf(7, 8)), listOf(Pair(5, 7), Pair(6, 8)).unzip())`
 
 ##18.6 Ordering operations
-**reverse**
+####**reverse**
 Returns a list with elements in reversed order.
 ```kotlin
 
@@ -937,22 +937,22 @@ Returns a list with elements in reversed order.
 	assertEquals(listOf(5, 7, 2, 3), unsortedList.reverse())
 ```	
 
-**sort**
+####**sort**
 Returns a sorted list of all elements.
 
 `assertEquals(listOf(2, 3, 5, 7), unsortedList.sort())`
 
-**sortBy**
+####**sortBy**
 Returns a list of all elements, sorted by the specified comparator.
 
 `assertEquals(listOf(3, 7, 2, 5), unsortedList.sortBy { it % 3 })`
 
-**sortDescending**
+####**sortDescending**
 Returns a sorted list of all elements, in descending order.
 
 `assertEquals(listOf(7, 5, 3, 2), unsortedList.sortDescending())`
 
-**sortDescendingBy**
+####**sortDescendingBy**
 Returns a sorted list of all elements, in descending order by the results of the specified order function.
 
 `assertEquals(listOf(2, 5, 7, 3), unsortedList.sortDescendingBy { it % 3 })`
