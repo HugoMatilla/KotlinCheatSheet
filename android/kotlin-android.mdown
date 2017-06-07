@@ -2,9 +2,9 @@ _This is my summary of the  Kotlin for Android Developers by Antonio Leiva. I us
 
 [https://antonioleiva.com/kotlin-android-developers-book/](https://antonioleiva.com/kotlin-android-developers-book/)
 
-#4 Classes and functions
+# 4 Classes and functions
 
-##4.1 Class declaration
+## 4.1 Class declaration
 ```kotlin
 
 	class MainActivity {...}
@@ -26,7 +26,7 @@ Constructor body can be in the `init`
 	}
 ```
 
-##4.2 Class inheritance
+## 4.2 Class inheritance
 
 Class are as default `final`
 Can only be extended if it's explicitly declared as `open` or `abstract`
@@ -39,7 +39,7 @@ Note that when using the single constructor nomenclature, we need to specify the
 	class Person(name: String, surname: String) : Animal(name)
 ```
 
-##4.3 Functions
+## 4.3 Functions
 
 ```kotlin
 	
@@ -56,7 +56,7 @@ Note that when using the single constructor nomenclature, we need to specify the
 	fun add(x:Int,y:Int):Int=x+y
 ```
 
-##4.4 Constructor and functions parameters
+## 4.4 Constructor and functions parameters
 
 First  name then type.
 ```kotlin
@@ -74,15 +74,15 @@ Default values.
 	}
 
 ```
-#7 Anko and Extension Functions
-##7.2 Anko
+# 7 Anko and Extension Functions
+## 7.2 Anko
 ```kotlin 
 
 	import org.jetbrains.anko.find
 	...
 	val forecastList: RecyclerView = find(R.id.forecast_list)
 ```
-##7.3 Extension functions
+## 7.3 Extension functions
         
 
 ```kotlin 
@@ -98,7 +98,7 @@ Default values.
     	get() = getText()
     	set(v) = setText(v)
 ```
-#8 Retrieving data from API
+# 8 Retrieving data from API
 
 ```kotlin
 
@@ -110,7 +110,7 @@ Default values.
 	    }
 	}
 ```
-##8.2 Performing the request out of the main thread
+## 8.2 Performing the request out of the main thread
 
 If it's used by an Activity, the `uiThread` code won't be executed if `activity.isFinishing()` returns true, and it won't crash if the activity is no longer valid.
 
@@ -135,7 +135,7 @@ Custom executor
 
 `async` returns a java Future, in case you want to work with futures. And if you need it to return a future with a result, you can use `asyncResult`.
 
-#9 Data Classes
+# 9 Data Classes
 
 ```kotlin
 
@@ -152,7 +152,7 @@ Custom executor
 	val f2 = f1.copy(temperature = 30f)
 ```
 
-##9.2 Mapping
+## 9.2 Mapping
 
 ```kotlin
 
@@ -167,7 +167,7 @@ Custom executor
 	}
 ```
 
-#10 Parsing data
+# 10 Parsing data
 ## Companion objects
 If we need some static properties, constants or functions in a class, we can use a companion object. This object will be shared among all instances of the class, the same as a static field or method would do in Java.
 
@@ -187,7 +187,7 @@ If we need some static properties, constants or functions in a class, we can use
 		} 
 	}
 ```
-##Domain Layer
+## Domain Layer
 This layer will basically implement a set of Commands in charge of performing the tasks in the app.
 
 ```kotlin
@@ -245,7 +245,7 @@ With function
 	}
 ```
 
-#11 Operator overloading
+# 11 Operator overloading
 
 ```kotlin
 
@@ -272,7 +272,7 @@ With function
 	override fun getItemCount(): Int = weekForecast.size()
 ```
 
-##11.3 Operators in extension functions
+## 11.3 Operators in extension functions
 
 ```kotlin
 
@@ -282,7 +282,7 @@ With function
 	val view = container[2]
 ```	
 
-#12 Clickables
+# 12 Clickables
 
 Create onClick.
 ```kotlin
@@ -373,8 +373,8 @@ Implement onClick
 	
 ```
 
-#13 Lambdas
-##13.1 Simplifying setOnClickListener()
+# 13 Lambdas
+## 13.1 Simplifying setOnClickListener()
 
 ```kotlin
 
@@ -417,7 +417,7 @@ Anko version
 	view.onClick { toast("Click") }
 ```
 
-##13.2 Click listener for ForecastListAdapter
+## 13.2 Click listener for ForecastListAdapter
 
 ```kotlin
 	
@@ -442,7 +442,7 @@ In functions that only need one parameter, we can make use of the `it` reference
 	val adapter = ForecastListAdapter(result) { toast(it.date) }
 ```	
 
-##13.3 Extending the language
+## 13.3 Extending the language
 
 This function gets an object of type T and a function that will be used as an extension function. The implementation just takes the object and lets it execute the function.
 
@@ -469,7 +469,7 @@ An **inline function** will be substituted by its code during compilation, inste
 	}
 
 ```
-#14 Visibility Modifiers
+# 14 Visibility Modifiers
 The default modifier in kotlin is `public`
 
 By default, all constructors are `public`
@@ -479,7 +479,7 @@ By default, all constructors are `public`
 	class C private constructor(a: Int) { ... }
 ```
 
-#15 Kotlin Android Extensions
+# 15 Kotlin Android Extensions
 
 ```kotlin
 	
@@ -487,8 +487,8 @@ By default, all constructors are `public`
 	...
 	titleView.textView.text = "Hello"
 ```
-#16 Application Singleton and Delegated Properties
-##16.2 Delegated Properties
+# 16 Application Singleton and Delegated Properties
+## 16.2 Delegated Properties
 
 ```kotlin
 
@@ -507,7 +507,7 @@ By default, all constructors are `public`
 		 var p: String by Delegate() 
 	}
 ``` 
-##16.3 Standard Delegates
+## 16.3 Standard Delegates
 **Lazy:** It takes a lambda that is executed the first time getValue is called, so the initialisation of the property is delayed up to that moment. 
 
 **Observable:**  Execute the lambda expression we specify, every time the set function is called.
@@ -518,7 +518,7 @@ By default, all constructors are `public`
 
 **Values from a map:** Creates an instance of an object from a dynamic map.
 
-##16.4 Custom delegate
+## 16.4 Custom delegate
 ```kotlin
 
 	// `object` keyword is used to define singletons.Cannot assign to a variable, but can refer to it by its name.
@@ -558,7 +558,7 @@ By default, all constructors are `public`
     	}
 	}
 ```
-#17 Creating an SQLiteOpenHelper
+# 17 Creating an SQLiteOpenHelper
 
 ```kotlin
 
@@ -612,7 +612,7 @@ By default, all constructors are `public`
 	}
 
 ```
-##17.4 Dependency injection
+## 17.4 Dependency injection
 Simple way. Use default values
 
 ```kotlin
@@ -630,7 +630,7 @@ Simple way. Use default values
 
 ```
 
-#18 Collections and functional operations
+# 18 Collections and functional operations
 
 * **Iterable**: The parent class. Any classes that inherit from this interface represent a sequence of elements we can iterate over.
 * **MutableIterable**: Iterables that support removing items during iteration.
@@ -647,9 +647,9 @@ elements. As it’s ordered, we can request an item by its position, using the g
 have two pairs with the same key in a map.
 * **MutableMap**: a Map that supports adding and removing elements.
 
-##18.1 Aggregate operations
+## 18.1 Aggregate operations
 
-###**any**
+### **any**
 Returns _true_ if at least one element matches the given predicate.
 ```kotlin
 
@@ -658,219 +658,219 @@ Returns _true_ if at least one element matches the given predicate.
 	assertFalse(list.any { it > 10 })
 ```
 
-###**all**
+### **all**
 Returns _true_ if all the elements match the given predicate.
 
 `assertTrue(list.all { it < 10 })`
 
 `assertFalse(list.all { it % 2 == 0 })`
 
-###**count**
+### **count**
 Returns the number of elements matching the given predicate.
 
 `assertEquals(3, list.count { it % 2 == 0 })`
 
-###**fold**
+### **fold**
 Accumulates the value starting with an initial value and applying an operation from the first to the last element in a collection.
 
 `assertEquals(25, list.fold(4) { total, next -> total + next })`
 
-###**foldRight**
+### **foldRight**
 Same as fold, but it goes from the last element to first.
 
 `assertEquals(25, list.foldRight(4) { total, next -> total + next })`
 
-###**forEach**
+### **forEach**
 Performs the given operation to each element.
 
 `list.forEach { println(it) }`
 
-###**forEachIndexed**
+### **forEachIndexed**
 
 Same as forEach, though we also get the index of the element.
 
 `list.forEachIndexed { index, value  -> println("position $index contains a $value") }`
 
-###**max**
+### **max**
 Returns the largest element or null if there are no elements.
 
 `assertEquals(6, list.max())`
 
-###**maxBy**
+### **maxBy**
 Returns the first element yielding the largest value of the given function or null if there are no elements.
 
 // The element whose negative is greater
 
 `assertEquals(1, list.maxBy { -it })`
 
-###**min**
+### **min**
 Returns the smallest element or null if there are no elements.
 
 `assertEquals(1, list.min())`
 
-###**minBy**
+### **minBy**
 Returns the first element yielding the smallest value of the given function or null if there are no elements.
 
 // The element whose negative is smaller
 
 `assertEquals(6, list.minBy { -it })`
 
-###**none**
+### **none**
 Returns true if no elements match the given predicate.
 
 // No elements are divisible by 7
 
 `assertTrue(list.none { it % 7 == 0 })`
 
-###**reduce**
+### **reduce**
 Same as fold, but it doesn't use an initial value. It accumulates the value applying an operation from the first to the last element in a collection.
 
 `assertEquals(21, list.reduce { total, next -> total + next })`
 
-###**reduceRight**
+### **reduceRight**
 
 Same as reduce, but it goes from the last element to first.
 
 `assertEquals(21, list.reduceRight { total, next -> total + next })`
 
-###**sumBy**
+### **sumBy**
 Returns the sum of all values produced by the transform function from the elements in the collection.
 
 `assertEquals(3, list.sumBy { it % 2 })`
 
 
 
-##18.2 Filtering operations
-###**drop**
+## 18.2 Filtering operations
+### **drop**
 Returns a list containing all elements except first n elements.
 
 `assertEquals(listOf(5, 6), list.drop(4))`
 
-###**dropWhile**
+### **dropWhile**
 Returns a list containing all elements except first elements that satisfy the given predicate.
 
 `assertEquals(listOf(3, 4, 5, 6), list.dropWhile { it < 3 })`
 
-###**dropLastWhile**
+### **dropLastWhile**
 Returns a list containing all elements except last elements that satisfy the given predicate.
 
 `assertEquals(listOf(1, 2, 3, 4), list.dropLastWhile { it > 4 })`
 
-###**filter**
+### **filter**
 Returns a list containing all elements matching the given predicate.
 
 `assertEquals(listOf(2, 4, 6), list.filter { it % 2 == 0 })`
 
-###**filterNot**
+### **filterNot**
 Returns a list containing all elements not matching the given predicate.
 
 `assertEquals(listOf(1, 3, 5), list.filterNot { it % 2 == 0 })`
 
-###**filterNotNull**
+### **filterNotNull**
 Returns a list containing all elements that are not null.
 
 `assertEquals(listOf(1, 2, 3, 4), listWithNull.filterNotNull())`
 
-###**slice**
+### **slice**
 Returns a list containing elements at specified indices.
 
 `assertEquals(listOf(2, 4, 5), list.slice(listOf(1, 3, 4)))`
 
-###**take**
+### **take**
 Returns a list containing first n elements.
 
 `assertEquals(listOf(1, 2), list.take(2))`
 
-###**takeLast**
+### **takeLast**
 Returns a list containing last n elements.
 
 `assertEquals(listOf(5, 6), list.takeLast(2))`
 
-###**takeWhile**
+### **takeWhile**
 Returns a list containing first elements satisfying the given predicate.
 
 `assertEquals(listOf(1, 2), list.takeWhile { it < 3 })`
 
-##18.3 Mapping operations
+## 18.3 Mapping operations
 
-###**flatMap**
+### **flatMap**
 Iterates over the elements creating a new collection for each one, and finally flattens all the collections into a unique list containing all the elements.
 
 `assertEquals(listOf(1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7), list.flatMap { listOf(it, it + 1) })`
 
-###**groupBy**
+### **groupBy**
 Returns a map of the elements in original collection grouped by the result of given function
 
 `assertEquals(mapOf("odd" to listOf(1, 3, 5), "even" to listOf(2, 4, 6)), list.groupBy { if (it % 2 == 0) "even" else "odd" })`
 
-###**map**
+### **map**
 Returns a list containing the results of applying the given transform function to each element of the original collection.
 
 `assertEquals(listOf(2, 4, 6, 8, 10, 12), list.map { it * 2 })`
 
-###**mapIndexed**
+### **mapIndexed**
 Returns a list containing the results of applying the given transform function to each element and its index of the original collection.
 
 `assertEquals(listOf (0, 2, 6, 12, 20, 30), list.mapIndexed { index, it -> index * it })`
 
-###**mapNotNull**
+### **mapNotNull**
 Returns a list containing the results of applying the given transform function to each non-null element of the original collection.
 
 `assertEquals(listOf(2, 4, 6, 8), listWithNull.mapNotNull { it * 2 })`
 
 
-##18.4 Elements operations
-###**contains**
+## 18.4 Elements operations
+### **contains**
 Returns true if the element is found in the collection.
 
 `assertTrue(list.contains(2))`
 
-###**elementAt**
+### **elementAt**
 Returns an element at the given index or throws an IndexOutOfBoundsException if the index is out of bounds of this collection.
 
 `assertEquals(2, list.elementAt(1))`
 
-###**elementAtOrElse**
+### **elementAtOrElse**
 Returns an element at the given index or the result of calling the default function if the index is out of bounds of this collection.
 
 `assertEquals(20, list.elementAtOrElse(10, { 2 * it }))`
 
-###**elementAtOrNull**
+### **elementAtOrNull**
 Returns an element at the given index or null if the index is out of bounds of this collection.
 
 `assertNull(list.elementAtOrNull(10))`
 
-###**first**
+### **first**
 Returns the first element matching the given predicate
 
 `assertEquals(2, list.first { it % 2 == 0 })`
 
-###**firstOrNull**
+### **firstOrNull**
 Returns the first element matching the given predicate, or null if no element was found.
 
 `assertNull(list.firstOrNull { it % 7 == 0 })`
 
-###**indexOf**
+### **indexOf**
 Returns the first index of element, or -1 if the collection does not contain element.
 
 `assertEquals(3, list.indexOf(4))`
 
-###**indexOfFirst**
+### **indexOfFirst**
 Returns index of the first element matching the given predicate, or -1 if the collection does not contain such element.
 
 `assertEquals(1, list.indexOfFirst { it % 2 == 0 })`
 
-###**indexOfLast**
+### **indexOfLast**
 Returns index of the last element matching the given predicate, or -1 if the collection does not contain such element.
 
 `assertEquals(5, list.indexOfLast { it % 2 == 0 })`
 
-###**last**
+### **last**
 Returns the last element matching the given predicate.
 
 `assertEquals(6, list.last { it % 2 == 0 })`
 
-###**lastIndexOf**
+### **lastIndexOf**
 Returns last index of element, or -1 if the collection does not contain an element.
 
 ```kotlin
@@ -878,7 +878,7 @@ Returns last index of element, or -1 if the collection does not contain an eleme
 	val listRepeated = listOf(2, 2, 3, 4, 5, 5, 6)
 	assertEquals(5, listRepeated.lastIndexOf(5))
 ```
-###**lastOrNull**
+### **lastOrNull**
 Returns the last element matching the given predicate, or null if no such element was found.
 
 ```kotlin
@@ -887,18 +887,18 @@ Returns the last element matching the given predicate, or null if no such elemen
 	assertNull(list.lastOrNull { it % 7 == 0 })
 ```
 
-###**single**
+### **single**
 Returns the single element matching the given predicate, or throws exception if there is no or more than one matching element.
 
 `assertEquals(5, list.single { it % 5 == 0 })`
 
-###**singleOrNull**
+### **singleOrNull**
 Returns the single element matching the given predicate, or null if element was not found or more than one element was found.
 
 `assertNull(list.singleOrNull { it % 7 == 0 })`
 
-##18.5 Generation operations
-###**merge**
+## 18.5 Generation operations
+### **merge**
 Returns a list of values built from elements of both collections with same indexes using the provided transform function. The list has the length of shortest collection.
 
 ```kotlin
@@ -908,28 +908,28 @@ Returns a list of values built from elements of both collections with same index
 	assertEquals(listOf(3, 4, 6, 8, 10, 11), list.merge(listRepeated) { it1, it2 ->  it1 + it2 })
 ```
 
-###**partition**
+### **partition**
 Splits original collection into pair of collections, where the first collection contains elements for which the predicate returned true, while the second collection contains elements for which the predicate returned false.
 
 `assertEquals(Pair(listOf(2, 4, 6), listOf(1, 3, 5)), list.partition { it % 2 == 0 })`
 
-###**plus**
+### **plus**
 Returns a list containing all elements of the original collection and then all elements of the given collection. Because of the name of the function, we can use the ‘+’ operator with it.
 
 `assertEquals(listOf(1, 2, 3, 4, 5, 6, 7, 8), list + listOf(7, 8))`
 
-###**zip**
+### **zip**
 Returns a list of pairs built from the elements of both collections with the same indexes. The list has the length of the shortest collection.
 
 `assertEquals(listOf(Pair(1, 7), Pair(2, 8)), list.zip(listOf(7, 8)))`
 
-###**unzip**
+### **unzip**
 Generates a Pair of Lists from a List of Pairs
 
 `assertEquals(Pair(listOf(5, 6), listOf(7, 8)), listOf(Pair(5, 7), Pair(6, 8)).unzip())`
 
-##18.6 Ordering operations
-###**reverse**
+## 18.6 Ordering operations
+### **reverse**
 Returns a list with elements in reversed order.
 ```kotlin
 
@@ -937,27 +937,27 @@ Returns a list with elements in reversed order.
 	assertEquals(listOf(5, 7, 2, 3), unsortedList.reverse())
 ```	
 
-###**sort**
+### **sort**
 Returns a sorted list of all elements.
 
 `assertEquals(listOf(2, 3, 5, 7), unsortedList.sort())`
 
-###**sortBy**
+### **sortBy**
 Returns a list of all elements, sorted by the specified comparator.
 
 `assertEquals(listOf(3, 7, 2, 5), unsortedList.sortBy { it % 3 })`
 
-###**sortDescending**
+### **sortDescending**
 Returns a sorted list of all elements, in descending order.
 
 `assertEquals(listOf(7, 5, 3, 2), unsortedList.sortDescending())`
 
-###**sortDescendingBy**
+### **sortDescendingBy**
 Returns a sorted list of all elements, in descending order by the results of the specified order function.
 
 `assertEquals(listOf(2, 5, 7, 3), unsortedList.sortDescendingBy { it % 3 })`
 
-##19 DataBase
+## 19 DataBase
 
 **Model Class for the database.**
 
@@ -1026,7 +1026,7 @@ We call the `use` function to get the data from the database.
 
 The _RowParser_ relies on the order of the columns, while the _MapRowParser_ uses the name of the column as the key of the map.
 
-## 20 Null safety in Kotlin
+##  20 Null safety in Kotlin
 
 ```kotlin
 
@@ -1067,7 +1067,7 @@ We decide
 
 _@Nullable_ and _@NotNull_ Android annotations can help. Jetbrains also has its own _@Nullable_ annotation.
 
-## 21. Business Logic
+##  21. Business Logic
 
 Create an interface that the data providers must implement.
 ```kotlin
@@ -1100,7 +1100,7 @@ The provider iterate through the data sources until it gets some data. Repositor
 	}
 ```
 
-## 22. Flow control and ranges
+##  22. Flow control and ranges
 
 **if**
 The if expression always returns a value. Unit.
@@ -1234,7 +1234,7 @@ Creative samples
 ```
 
 
-## 23 _reified_
+##  23 _reified_
 As you may know, when we create a generic method in Java, there is no way to get the class from the generic type. A popular workaround is to pass the class as a parameter. In Kotlin, an inline function can be reified, which means we can get and use the class of the generic type inside the function. In this case, we can create the intent inside the function, by calling T::class.javaClass.
 
 ```kotlin
@@ -1249,7 +1249,7 @@ As you may know, when we create a generic method in Java, there is no way to get
 
 It creates an intent by getting the javaClass from the generic type, iterates over params and adds them to the intent, and starts the activity using the intent. The reified type is limited to be an Activity descendant.
 
-## 24 Interfaces
+##  24 Interfaces
 ```kotlin
 
 	interface FlyingAnimal {
@@ -1325,7 +1325,7 @@ But now wings can be used with another animals that are not birds.
 	bat.fly()
 ```
 
-##25 Generics
+## 25 Generics
 
 ```kotlin
 
@@ -1374,7 +1374,7 @@ Generic Functions
 	}
 ```
 
-###Kotlin Generic Helpers
+### Kotlin Generic Helpers
 **let**
 It receives a function with the object caller as a parameter, and returns function returns value. 
 Useful to deal with nullable objects.
@@ -1442,7 +1442,7 @@ _Use_
 	}
 #Extra
 
-## Extend Instrumetation Tests
+##  Extend Instrumetation Tests
 
 ```kotlin
 
@@ -1469,7 +1469,7 @@ _Use_
             }
 ```
 
-## Nested Classes
+##  Nested Classes
 Not able to access the members of the outter class.
 ```kotlin
 
@@ -1495,7 +1495,7 @@ Not able to access the members of the outter class.
 	val demo = Outer().Inner().foo() // == 1
 ```	
 
-## Enum classes
+##  Enum classes
 ```kotlin
 
 	enum class Day {
@@ -1531,7 +1531,7 @@ Obtain its name and the position
 	val searchPosition: Int = Icon.SEARCH.ordinal
 ```
 
-## Sealed classes
+##  Sealed classes
 Sealed classes are used for representing restricted class hierarchies.
 The number of classes that extend a sealed class is fixed.
 ```kotlin
@@ -1547,7 +1547,7 @@ The number of classes that extend a sealed class is fixed.
 	}
 ```
 
-## Exceptions
+##  Exceptions
 In Kotlin, all exceptions implement Throwable, have a message and are unchecked.
 To be unchecked allow us not to use try/catch.
 Both _try_ and _throw_ can beassigned to variables.
