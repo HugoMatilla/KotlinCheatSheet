@@ -359,13 +359,126 @@ fun readNumber(reader: BufferedReader) {
 }
 ```
 ## 2.6 Summary
-* The fun keyword is used to declare a function. The val and var keywords declare read-only and mutable variables, respectively.
-* String templates help you avoid noisy string concatenation. Prefix a variable name with $ or surround an expression with ${ } to have its value injected into the string.
+* The `fun` keyword is used to declare a function. The `val` and `var` keywords declare read-only and mutable variables, respectively.
+* String templates help you avoid noisy string concatenation. Prefix a variable name with `$` or surround an expression with `${ }` to have its value injected into the string.
 * Value-object classes are expressed in a concise way in Kotlin.
-* The familiar if is now an expression with a return value.
-* The when expression is analogous to switch in Java but is more powerful.
-* You don’t have to cast a variable explicitly after checking that it has a certain type: the compiler casts it for you automatically using a smart cast.
-* The for, while, and do-while loops are similar to their counterparts in Java, but the for loop is now more convenient, especially when you need to iterate
-over a map or a collection with an index.
-* The concise syntax 1..5 creates a range. Ranges and progressions allow Kotlin to use a uniform syntax and set of abstractions in for loops and also work with the in and !in operators that check whether a value belongs to a range.
-* Exception handling in Kotlin is very similar to that in Java, except that Kotlin doesn’t require you to declare the exceptions that can be thrown by a function.
+* The familiar `if` is now an expression with a return value.
+* The `when` expression is analogous to switch in Java but is more powerful.
+* You don’t have to cast a variable explicitly after checking that it has a certain type: the compiler casts it for you automatically using a **smart cast**.
+* The `for`, `while`, and `do-while` loops are similar to their counterparts in Java, but the `for loop` is now more convenient, especially when you need to iterate over a map or a collection with an index.
+* The concise syntax `1..5` creates a range. Ranges and progressions allow Kotlin to use a uniform syntax and set of abstractions in for loops and also work with the `in` and `!in` operators that check whether a value belongs to a range.
+* Exception handling in Kotlin is very similar to that in Java, except that **Kotlin doesn’t require you to declare the exceptions that can be thrown** by a function.
+
+# 3 Defining and calling functions
+## 3.1 Creating collections in Kotlin
+Kotlin uses the standard Java collection classes
+
+```js
+val set = hashSetOf(1, 7, 53) // java.util.HashSet
+val list = arrayListOf(1, 7, 53) // java.util.ArrayList
+val map = hashMapOf(1 to "one", 7 to "seven", 53 to "fifty-three") // java.util.HashMap
+```
+You can do more with Kotlin than with Java. 
+ie
+
+```js
+val strings = listOf("first", "second", "fourteenth")
+println(strings.last())// fourteenth
+
+val numbers = setOf(1, 14, 2)
+println(numbers.max()) // 14
+```
+
+## 3.2 Making functions easier to call
+Sample call to joinToString
+
+```js
+fun <T> joinToString(
+		collection: Collection<T>,
+		separator: String,
+		prefix: String,
+		postfix: String
+	): String {
+
+	val result = StringBuilder(prefix)
+	for ((index, element) in collection.withIndex()) {
+		if (index > 0) result.append(separator)
+			result.append(element)
+		}
+	result.append(postfix)
+	return result.toString()
+}
+```
+Call
+
+```js
+val list = listOf(1, 2, 3)
+println(list) // [1, 2, 3]
+
+val list = listOf(1, 2, 3)
+println(joinToString(list, "; ", "(", ")")) // (1; 2; 3)
+```
+
+### 3.2.1 Named Arguments
+To make easier the call `joinToString(collection, " ", " ", ".")` in Kotlin we can add the name of the parameter to the call.
+
+```js
+joinToString(collection, separator = " ", prefix = " ", postfix = ".")
+```
+* If you specify the name of an argument in a call, you should also specify the names for all the arguments after that
+* You can’t use named arguments when calling methods written in Java
+
+### 3.2.2 DEafult parameters values
+To reduce the number of overloaded methods, we can use default parameters in Kotlin.
+
+```js
+fun <T> joinToString(
+	collection: Collection<T>,
+	separator: String = ", ",
+	prefix: String = "",
+	postfix: String = ""
+): String
+```
+```js
+joinToString(list, ", ", "", "") // 1, 2, 3
+joinToString(list) // 1, 2, 3
+joinToString(list, "; ") // 1; 2; 3
+```
+
+* When using the regular call syntax, you can omit only trailing arguments. 
+* When using named arguments, you can omit some arguments from the middle of the list
+
+```js
+joinToString(list, suffix = ";", prefix = "# ") // 1, 2, 3
+```
+
+* _To use default values from JAVA use `@JVMOverloads`_
+
+### 3.2.3 Getting rid of static utility classes: **top-level** functions and properties
+* In Kotlin  you can place functions at the *top level* of a source file, outside of any class.
+* They are still members of the package declared at the top of the file.
+* You still need to import them if you want to call them from other packages.
+
+```js
+package strings
+fun joinToString(...): String { ... }
+```
+* _To use top-level functions from JAVA call it as `NameOfTheFileContainingTheFunction.functionName()`_
+
+#### top-level properties
+```js
+var opCount = 0
+fun performOperation() {opCount++}
+fun reportOperationCount() {println("Operation performed $opCount times")}
+```
+They are stored in static files.
+
+* `const` makes them immutable. In JAVA: `static final`
+
+## 3.3 Adding methods to other people’s classes: **extension** functions and properties
+Extension function: a function that can be called as a member of a class but is defined outside of it.
+
+
+
+
+
