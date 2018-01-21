@@ -6,7 +6,7 @@ an Array of strings as a parameter. Note that semicolons are optional.
 ``` kotlin
 
 	fun main(args: Array<String>) {
-    	println("Hello, world!")
+    		println("Hello, world!")
 	}
 ```
 
