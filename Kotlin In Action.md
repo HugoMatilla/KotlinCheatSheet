@@ -428,7 +428,7 @@ joinToString(collection, separator = " ", prefix = " ", postfix = ".")
 * If you specify the name of an argument in a call, you should also specify the names for all the arguments after that
 * You can’t use named arguments when calling methods written in Java
 
-### 3.2.2 DEafult parameters values
+### 3.2.2 Default parameters values
 To reduce the number of overloaded methods, we can use default parameters in Kotlin.
 
 ```js
@@ -478,7 +478,275 @@ They are stored in static files.
 ## 3.3 Adding methods to other people’s classes: **extension** functions and properties
 Extension function: a function that can be called as a member of a class but is defined outside of it.
 
+* `String` is the _receiver type_
+* `this` is the _receiver object_ ("Kotlin" in the example)
+* `this` can be omitted
 
+```js
+fun String.lastChar(): Char = this.get(this.length - 1)
 
+println("Kotlin".lastChar()) // n
+```
+* You can not break encapsulation. From a extension function you don't have access to private or protected members.
 
+### 3.3.1 Imports and extension functions
+* You have to import them
+* You can import individual functions
 
+```js
+import strings.lastChar or //strings.*
+"Kotlin".lastChar()
+```
+You can change the name of the function
+
+```js
+3. import strings.lastChar as last
+"Kotlin".lastChar()
+```
+
+### 3.3.2 Calling extension function from Java
+* An extension function is a static method that accepts the receiver object as its first argument.
+* As with other top-level functions, the name of the Java class containing the method is determined from the name of the file where the function is declared.
+* Is declared as a top-level function, so it’s compiled to a static method.
+
+```js
+/* Java */
+char c = StringUtilKt.lastChar("Java");
+```
+
+### 3.3.3 Utility functions as extensions
+```js
+fun <T> Collection<T>.joinToString(
+	separator: String = ", ",
+	prefix: String = "",
+	postfix: String = ""
+): String {
+	val result = StringBuilder(prefix)
+	for ((index, element) in this.withIndex())
+		if (index > 0) result.append(separator)
+		result.append(element)
+	}
+	result.append(postfix)
+	return result.toString()
+}
+
+val list = arrayListOf(1, 2, 3)
+list.joinToString(" ")// 1 2 3
+```
+
+If we want to use it only in Strings.
+
+```js
+fun Collection<String>.join(
+	separator: String = ", ",
+	prefix: String = "",
+	postfix: String = ""
+) = joinToString(separator, prefix, postfix)
+
+listOf("one", "two", "eight").join(" ")// one two eight
+```
+
+### 3.3.4 No overriding for extension functions
+* You can’t override an extension function
+* The function that’s called depends on the declared static type of the variable, not on the runtime type of the value stored in that variable.
+
+```js
+fun View.showOff() = println("I'm a view!")
+fun Button.showOff() = println("I'm a button!")
+
+val view: View = Button()
+view.showOff() // I'm a view!
+```
+
+* If the class has a member function with the same signature as an extension function, the member function always takes precedence.
+
+### Extension properties
+* Extend classes with APIs that can be accessed using the property syntax, be accessed using the property syntax,
+* They’re called properties, they can’t have any state. (there’s no proper place to store it)
+
+```js
+val String.lastChar: Char
+	get() = get(length - 1)
+```
+* The getter must always be defined. There’s no backing field and therefore no default getter implementation.
+* Initializers aren’t allowed for the same reason.
+
+Adding a setter they can be mutable 
+
+```js
+var StringBuilder.lastChar: Char
+	get() = get(length - 1)
+	set(value: Char) {
+		this.setCharAt(length - 1, value)
+}
+println("Kotlin".lastChar) // n
+val sb = StringBuilder("Kotlin?")
+sb.lastChar = '!'
+println(sb)// Kotlin!
+```
+
+* From Java, you should invoke its getter explicitly: `StringUtilKt.getLastChar("Java")`
+
+## 3.4 Working with collections: varargs, infix calls, and library support
+### 3.4.2 Varargs: functions that accept an arbitrary number of arguments
+* Used in `listOf` for example
+
+```js
+val list = listOf(2, 3, 5, 7, 11)
+```
+* Uses `vararg` modifier  on the parameter insted of the `...` from Java
+
+```js 
+fun listOf<T>(vararg values: T): List<T> { ... }
+```
+
+* Arrays in Java are passed as is, but in Kotlin they have to be unpacked. You can use the _spread operator_: `*`.
+
+```
+fun main(args: Array<String>) {
+	val list = listOf("args: ", *args)
+	println(list)
+}
+```
+
+### 3.4.3 Working with pairs: infix calls and destructuring declarations
+In an infix call, the method name is placed immediately between the target object name and the parameter
+
+```
+1.to("one") === 1 to "one"
+```
+
+* Use `infix` modifier.
+
+```js
+infix fun Any.to(other: Any) = Pair(this, other)
+```
+
+#### _Destructuring declaration_
+```js
+val (number, name) = 1 to "one"
+```
+It is used in loops
+
+```js
+for ((index, element) in collection.withIndex()) {
+	println("$index: $element")
+}
+```
+
+## 3.5 Working with strings and regular expressions
+Kotlin Strings are the same as Java Strings
+### 3.5.1 Splitting strings
+* To avoid the confusion in Java with the split, dots and regular expressions Kotlin have overloaded extension. One that take a string and another one that take a Regex.
+* You can also give more than one separator to the split method. `"12.345-6.A".split(".", "-")`
+
+### 3.5.2 Regular expressions and triple-quoted strings
+Using string extension functions is easy to parse the path, file name and extension of a file.
+
+```js
+fun parsePath(path: String) {
+	val directory = path.substringBeforeLast("/")
+	val fullName = path.substringAfterLast("/")
+	val fileName = fullName.substringBeforeLast(".")
+	val extension = fullName.substringAfterLast(".")
+	println("Dir: $directory, name: $fileName, ext: $extension")
+}
+parsePath("/Users/yole/kotlin-book/chapter.adoc")
+// Dir: /Users/yole/kotlin-book, name: chapter, ext: adoc
+```
+
+#### _Triple-quoted string_ and Regex
+In _triple-quoted string_, you don’t need to escape any characters, including the backslash, so you can encode the dot symbol with `\.` rather than `\\.`
+
+```js
+fun parsePath(path: String) {
+	val regex = """(.+)/(.+)\.(.+)""".toRegex()
+	val matchResult = regex.matchEntire(path)
+	if (matchResult != null) {
+		val (directory, filename, extension) = matchResult.destructured
+		println("Dir: $directory, name: $filename, ext: $extension")
+	}
+}
+```
+### 3.5.3 Multiline triple-quoted strings
+* _triple-quoted strings_ allows embed in your programs text containing line breaks
+* You can trim the indentation using `trimMargin` ti have a better representation.
+
+```
+val kotlinLogo = """| //
+				   .|//
+				   .|/ \"""
+>>> println(kotlinLogo.trimMargin("."))
+| //
+|//
+|/ \
+```
+### 3.6 Making your code tidy: _local functions_ and extensions
+* Making DRY principle less boilerplate and cleaned
+* Keep the structure of the class. (Functions are inside the methods where are called.)
+
+From
+
+```java
+class User(val id: Int, val name: String, val address: String)
+fun saveUser(user: User) {
+	if (user.name.isEmpty()) {// <- Repeated
+		throw IllegalArgumentException("Can't save user ${user.id}: empty Name") // <- Repeated
+	}
+	if (user.address.isEmpty()) { // <- Repeated
+		throw IllegalArgumentException("Can't save user ${user.id}: empty Address") // <- Repeated
+	}
+// Save user to the database
+}
+```
+
+* Local functions: You can nest the functions you’ve extracted in the containing function
+* Local functions have access to all parameters and variables of the enclosing function
+* Local functions keep separated functions that are only relevant to a parent function, keeping the class clean and clear.
+* Local functions can access its public members without extra qualification
+* Try not to have more than one level of nesting
+
+```js
+class User(val id: Int, val name: String, val address: String)
+	fun saveUser(user: User) {
+		fun validate(value: String, fieldName: String) {
+			if (value.isEmpty()) {
+				throw IllegalArgumentException( "Can't save user ${user.id}: empty $fieldName")
+			}
+		}
+	validate(user.name, "Name")
+	validate(user.address, "Address")
+// Save user to the database
+}
+```
+
+To a extension function
+
+```js
+class User(val id: Int, val name: String, val address: String)
+
+	fun User.validateBeforeSave() {
+		fun validate(value: String, fieldName: String) {
+			if (value.isEmpty()) {
+				throw IllegalArgumentException( "Cant save user ${user.id}: empty $fieldName")
+			}
+		}
+		validate(name, "Name")
+		validate(address, "Address")
+	}
+	
+	fun saveUser(user: User) {
+		user.validateBeforeSave()
+		// Save user to the database
+	}
+}
+```
+## 3.7 Summary
+* Kotlin doesn’t define its own collection classes and instead enhances the Java collection classes with a richer API.
+* Defining default values for function parameters greatly reduces the need to define overloaded functions, and the named-argument syntax makes calls to functions with many parameters much more readable.
+* Functions and properties can be declared directly in a file, not just as members of a class, allowing for a more flexible code structure.
+* Extension functions and properties let you extend the API of any class, including classes defined in external libraries, without modifying its source code and with no runtime overhead.
+* Infix calls provide a clean syntax for calling operator-like methods with a single argument.
+* Kotlin provides a large number of convenient string-handling functions for both regular expressions and plain strings.
+* Triple-quoted strings provide a clean way to write expressions that would require a lot of noisy escaping and string concatenation in Java.
+* Local functions help you structure your code more cleanly and eliminate duplication
