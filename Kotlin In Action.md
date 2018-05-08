@@ -1,7 +1,7 @@
 # 2 Kotlin Basics
 ## 2.1 Basic Elements
 ### 2.1.1 Hello World
-```js
+```kotlin
 fun main(args: Array<String>){
 	println("Hello World")
 }
@@ -13,7 +13,7 @@ fun main(args: Array<String>){
 
 ### 2.1.2 Functions
 
-```js
+```kotlin
 fun max(a: Int, b: Int): Int {
 	return if (a > b) a else b
 }
@@ -30,7 +30,7 @@ Kotlin
 #### Expression Bodies
 If the function body is a single expression you can use it as the entire body of the function
 
-```js
+```kotlin
 fun max(a: Int, b: Int): Int = if (a > b) a else b
 ```
 
@@ -40,24 +40,24 @@ fun max(a: Int, b: Int): Int = if (a > b) a else b
 #### Type inference
 Omitting the return type, and let the compiler _infer_ the type. (Only in Expression Bodies)
 
-```js
+```kotlin
 	fun max(a: Int, b: Int) = if (a > b) a else b
 ```
 
 ### 2.1.3  Variables
 If a variable has an initializer
 
-```js
+```kotlin
 val question = "The Ultimate Question of Life, the Universe, and Everything"
 val answer = 42
 ```
  You can add the type, but is not needed
- ```js
+ ```kotlin
  val answer : Int = 42
 ```
 If there is no initializer, you need to add the type
 
-```js
+```kotlin
  val answer : Int
  answer = 42
 ```
@@ -71,7 +71,7 @@ Use `val` unless necessary
 Initialize it with different values depending on some condition, if the compiler can ensure that only one of the initialization statements will
 be executed.
 
-```js
+```kotlin
 if (canPerformOperation())
 	var message = "Success"
 else 
@@ -80,20 +80,20 @@ else
 
 Objects that a `val` point can be changed
 
-```js
+```kotlin
 val languages = arrayListOf("Java") // languages is an immutable reference
 languages.add("Kotlin")
 ```
 
 `var` can change the value but not the type
 
-```js
+```kotlin
 var answer = 42
 answer = "no answer" // Compile Error
 ```
 
 ### 2.1.4 Easier string formatting: string templates
-```js
+```kotlin
 var name  = "Peter"
 println("Hello, $name!")
 println("Hello, ${args[0]}!")
@@ -161,7 +161,7 @@ enum class Color(val r: Int, val g: Int, val b: Int) {
 * semicolon is needed to separate _enum constants_ list from method definitions
 
 ### 2.3.2 Using “when” to deal with enum classes
-```js
+```kotlin
 fun getWarmth(color: Color) =
 	when(color) {
 		Color.RED, Color.ORANGE, Color.YELLOW -> "warm"
@@ -172,7 +172,7 @@ fun getWarmth(color: Color) =
 
 Import enum constants to access without qualifier
 
-```js
+```kotlin
 import ch02.colors.Color //Imports the Color class declared
 import ch02.colors.Color.* //Explicitly imports enum constants to us them by names
 fun getWarmth(color: Color) = when(color) {
@@ -185,7 +185,7 @@ fun getWarmth(color: Color) = when(color) {
 ### 2.3.3 Using “when” with arbitrary objects
 Being able to use any expression as a when branch condition lets you write concise and beautiful code in many cases.
 
-```js
+```kotlin
 fun mix(c1: Color, c2: Color) =
 	when (setOf(c1, c2)) {
 		setOf(RED, YELLOW) -> ORANGE
@@ -197,7 +197,7 @@ fun mix(c1: Color, c2: Color) =
 ### 2.3.4 Using `when` without an argument
 If no argument is supplied for the when expression, the branch condition is any Boolean expression.
 
-```js
+```kotlin
 fun mixOptimized(c1: Color, c2: Color) =
 when {
 	(c1 == RED && c2 == YELLOW) ||
@@ -217,7 +217,7 @@ when {
 * `is` similar to Java's `instanceOf`
 * *smart cast*: `is` do the cast automatically so you don't need to do it manually as in Java. 
 
-```js
+```kotlin
 if (e is Sum) {
 	return eval(e.right) + eval(e.left)
 }
@@ -226,7 +226,7 @@ if (e is Sum) {
 ### 3.3.6 Refactoring: replacing “if” with “when”
 `when` branches check the argument type and apply smart casts
 
-```js
+```kotlin
 fun eval(e: Expr): Int =
 	when (e) {
 		is Num -> e.value
@@ -239,7 +239,7 @@ fun eval(e: Expr): Int =
 * `if` and `when` can have blocks as branches. 
 * The last expression in the block is the result.
 
-```js
+```kotlin
 	...
 	is Num -> {
 		println("num: ${e.value}")
@@ -254,7 +254,7 @@ This does not apply for regular functions. They must have a `return`
 ### 2.4.1 The “while” loop
 The body is executed while the condition is true.
 
-```js
+```kotlin
 while (condition) {
 	...
 }
@@ -262,7 +262,7 @@ while (condition) {
 
 The body is executed for the first time unconditionally. After that, it’s executed while the condition is true.
 
-```js
+```kotlin
 do {
 	...
 } while (condition)
@@ -271,26 +271,26 @@ do {
 ### 2.4.2 Iterating over numbers: ranges and progressions
 * _range_: essentially  an interval between two values. `..` Last value is always in the range. (closed/inclusive range)
 
-```js
+```kotlin
 	val oneToTen = 1..10
 ```
 
 * You can change the step and the order 
 
-```js
+```kotlin
 	for (i in 100 downTo 1 step 2)
 ```
 
 * Iteration in a range
 
-```js
+```kotlin
 	for (x in 0 until size) //  for (x in 0..size-1)
 ```
 
 ### 2.4.3 Iterating over maps
 The .. syntax to create a range works not only for numbers, but also for characters
 
-```js
+```kotlin
 val binaryReps = TreeMap<Char, String>() // in TreeMaps, keys are sorted
 for (c in 'A'..'F') {
 	val binary = Integer.toBinaryString(c.toInt())
@@ -303,7 +303,7 @@ for ((letter, binary) in binaryReps) { // Iterates over a map, assigning the map
 
 You can get the index of a collection
 
-```js
+```kotlin
 val list = arrayListOf("10", "11", "1001")
 for ((index, element) in list.withIndex()) {
 	println("$index: $element")
@@ -313,13 +313,13 @@ for ((index, element) in list.withIndex()) {
 ### 2.4.4 Using “in” to check collection and range membership
 You can use the `in` operator to check whether a value is in a range, or its opposite, `!in`
 
-```js
+```kotlin
 	fun isLetter(c: Char) = c in 'a'..'z' || c in 'A'..'Z'
 	fun isNotDigit(c: Char) = c !in '0'..'9'
 ```
 Works also on _when expressions_
 
-```js
+```kotlin
 fun recognize(c: Char) = when (c) {
 	in '0'..'9' -> "It's a digit!"
 	in 'a'..'z', in 'A'..'Z' -> "It's a letter!"
@@ -332,7 +332,7 @@ You can use the `in` in any class that implements the `java.lang.Comparable` int
 * You don’t have to use the new keyword to create an instance of the exception
 * `throw` construct is an expression
 
-```js
+```kotlin
 val percentage =
 	if (number in 0..100)
 		number
@@ -348,7 +348,7 @@ val percentage =
 * If the execution of a try code block behaves normally, the last expression in the block is the result. 
 * If an exception is caught, the last expression in a corresponding catch block is the result.
 
-```js
+```kotlin
 fun readNumber(reader: BufferedReader) {
 	val number = try {
 		Integer.parseInt(reader.readLine())
@@ -373,7 +373,7 @@ fun readNumber(reader: BufferedReader) {
 ## 3.1 Creating collections in Kotlin
 Kotlin uses the standard Java collection classes
 
-```js
+```kotlin
 val set = hashSetOf(1, 7, 53) // java.util.HashSet
 val list = arrayListOf(1, 7, 53) // java.util.ArrayList
 val map = hashMapOf(1 to "one", 7 to "seven", 53 to "fifty-three") // java.util.HashMap
@@ -381,7 +381,7 @@ val map = hashMapOf(1 to "one", 7 to "seven", 53 to "fifty-three") // java.util.
 You can do more with Kotlin than with Java. 
 ie
 
-```js
+```kotlin
 val strings = listOf("first", "second", "fourteenth")
 println(strings.last())// fourteenth
 
@@ -392,7 +392,7 @@ println(numbers.max()) // 14
 ## 3.2 Making functions easier to call
 Sample call to joinToString
 
-```js
+```kotlin
 fun <T> joinToString(
 		collection: Collection<T>,
 		separator: String,
@@ -411,7 +411,7 @@ fun <T> joinToString(
 ```
 Call
 
-```js
+```kotlin
 val list = listOf(1, 2, 3)
 println(list) // [1, 2, 3]
 
@@ -422,7 +422,7 @@ println(joinToString(list, "; ", "(", ")")) // (1; 2; 3)
 ### 3.2.1 Named Arguments
 To make easier the call `joinToString(collection, " ", " ", ".")` in Kotlin we can add the name of the parameter to the call.
 
-```js
+```kotlin
 joinToString(collection, separator = " ", prefix = " ", postfix = ".")
 ```
 * If you specify the name of an argument in a call, you should also specify the names for all the arguments after that
@@ -431,7 +431,7 @@ joinToString(collection, separator = " ", prefix = " ", postfix = ".")
 ### 3.2.2 Default parameters values
 To reduce the number of overloaded methods, we can use default parameters in Kotlin.
 
-```js
+```kotlin
 fun <T> joinToString(
 	collection: Collection<T>,
 	separator: String = ", ",
@@ -439,7 +439,7 @@ fun <T> joinToString(
 	postfix: String = ""
 ): String
 ```
-```js
+```kotlin
 joinToString(list, ", ", "", "") // 1, 2, 3
 joinToString(list) // 1, 2, 3
 joinToString(list, "; ") // 1; 2; 3
@@ -448,7 +448,7 @@ joinToString(list, "; ") // 1; 2; 3
 * When using the regular call syntax, you can omit only trailing arguments. 
 * When using named arguments, you can omit some arguments from the middle of the list
 
-```js
+```kotlin
 joinToString(list, suffix = ";", prefix = "# ") // 1, 2, 3
 ```
 
@@ -459,14 +459,14 @@ joinToString(list, suffix = ";", prefix = "# ") // 1, 2, 3
 * They are still members of the package declared at the top of the file.
 * You still need to import them if you want to call them from other packages.
 
-```js
+```kotlin
 package strings
 fun joinToString(...): String { ... }
 ```
 * _To use top-level functions from JAVA call it as `NameOfTheFileContainingTheFunction.functionName()`_
 
 #### top-level properties
-```js
+```kotlin
 var opCount = 0
 fun performOperation() {opCount++}
 fun reportOperationCount() {println("Operation performed $opCount times")}
@@ -482,7 +482,7 @@ Extension function: a function that can be called as a member of a class but is 
 * `this` is the _receiver object_ ("Kotlin" in the example)
 * `this` can be omitted
 
-```js
+```kotlin
 fun String.lastChar(): Char = this.get(this.length - 1)
 
 println("Kotlin".lastChar()) // n
@@ -493,15 +493,15 @@ println("Kotlin".lastChar()) // n
 * You have to import them
 * You can import individual functions
 
-```js
+```kotlin
 import strings.lastChar or //strings.*
 "Kotlin".lastChar()
 ```
 You can change the name of the function
 
-```js
-3. import strings.lastChar as last
-"Kotlin".lastChar()
+```kotlin
+import strings.lastChar as last
+"Kotlin".last()
 ```
 
 ### 3.3.2 Calling extension function from Java
@@ -509,13 +509,13 @@ You can change the name of the function
 * As with other top-level functions, the name of the Java class containing the method is determined from the name of the file where the function is declared.
 * Is declared as a top-level function, so it’s compiled to a static method.
 
-```js
+```kotlin
 /* Java */
 char c = StringUtilKt.lastChar("Java");
 ```
 
 ### 3.3.3 Utility functions as extensions
-```js
+```kotlin
 fun <T> Collection<T>.joinToString(
 	separator: String = ", ",
 	prefix: String = "",
@@ -536,7 +536,7 @@ list.joinToString(" ")// 1 2 3
 
 If we want to use it only in Strings.
 
-```js
+```kotlin
 fun Collection<String>.join(
 	separator: String = ", ",
 	prefix: String = "",
@@ -550,7 +550,7 @@ listOf("one", "two", "eight").join(" ")// one two eight
 * You can’t override an extension function
 * The function that’s called depends on the declared static type of the variable, not on the runtime type of the value stored in that variable.
 
-```js
+```kotlin
 fun View.showOff() = println("I'm a view!")
 fun Button.showOff() = println("I'm a button!")
 
@@ -564,7 +564,7 @@ view.showOff() // I'm a view!
 * Extend classes with APIs that can be accessed using the property syntax, be accessed using the property syntax,
 * They’re called properties, they can’t have any state. (there’s no proper place to store it)
 
-```js
+```kotlin
 val String.lastChar: Char
 	get() = get(length - 1)
 ```
@@ -573,7 +573,7 @@ val String.lastChar: Char
 
 Adding a setter they can be mutable 
 
-```js
+```kotlin
 var StringBuilder.lastChar: Char
 	get() = get(length - 1)
 	set(value: Char) {
@@ -591,18 +591,18 @@ println(sb)// Kotlin!
 ### 3.4.2 Varargs: functions that accept an arbitrary number of arguments
 * Used in `listOf` for example
 
-```js
+```kotlin
 val list = listOf(2, 3, 5, 7, 11)
 ```
 * Uses `vararg` modifier  on the parameter insted of the `...` from Java
 
-```js 
+```kotlin 
 fun listOf<T>(vararg values: T): List<T> { ... }
 ```
 
 * Arrays in Java are passed as is, but in Kotlin they have to be unpacked. You can use the _spread operator_: `*`.
 
-```
+```kotlin
 fun main(args: Array<String>) {
 	val list = listOf("args: ", *args)
 	println(list)
@@ -612,23 +612,23 @@ fun main(args: Array<String>) {
 ### 3.4.3 Working with pairs: infix calls and destructuring declarations
 In an infix call, the method name is placed immediately between the target object name and the parameter
 
-```
+```kotlin
 1.to("one") === 1 to "one"
 ```
 
 * Use `infix` modifier.
 
-```js
+```kotlin
 infix fun Any.to(other: Any) = Pair(this, other)
 ```
 
 #### _Destructuring declaration_
-```js
+```kotlin
 val (number, name) = 1 to "one"
 ```
 It is used in loops
 
-```js
+```kotlin
 for ((index, element) in collection.withIndex()) {
 	println("$index: $element")
 }
@@ -643,7 +643,7 @@ Kotlin Strings are the same as Java Strings
 ### 3.5.2 Regular expressions and triple-quoted strings
 Using string extension functions is easy to parse the path, file name and extension of a file.
 
-```js
+```kotlin
 fun parsePath(path: String) {
 	val directory = path.substringBeforeLast("/")
 	val fullName = path.substringAfterLast("/")
@@ -658,7 +658,7 @@ parsePath("/Users/yole/kotlin-book/chapter.adoc")
 #### _Triple-quoted string_ and Regex
 In _triple-quoted string_, you don’t need to escape any characters, including the backslash, so you can encode the dot symbol with `\.` rather than `\\.`
 
-```js
+```kotlin
 fun parsePath(path: String) {
 	val regex = """(.+)/(.+)\.(.+)""".toRegex()
 	val matchResult = regex.matchEntire(path)
@@ -670,9 +670,9 @@ fun parsePath(path: String) {
 ```
 ### 3.5.3 Multiline triple-quoted strings
 * _triple-quoted strings_ allows embed in your programs text containing line breaks
-* You can trim the indentation using `trimMargin` ti have a better representation.
+* You can trim the indentation using `trimMargin` to have a better representation.
 
-```
+```kotlin
 val kotlinLogo = """| //
 				   .|//
 				   .|/ \"""
@@ -687,8 +687,9 @@ val kotlinLogo = """| //
 
 From
 
-```java
+```kotlin
 class User(val id: Int, val name: String, val address: String)
+
 fun saveUser(user: User) {
 	if (user.name.isEmpty()) {// <- Repeated
 		throw IllegalArgumentException("Can't save user ${user.id}: empty Name") // <- Repeated
@@ -706,23 +707,24 @@ fun saveUser(user: User) {
 * Local functions can access its public members without extra qualification
 * Try not to have more than one level of nesting
 
-```js
+```kotlin
 class User(val id: Int, val name: String, val address: String)
-	fun saveUser(user: User) {
-		fun validate(value: String, fieldName: String) {
-			if (value.isEmpty()) {
-				throw IllegalArgumentException( "Can't save user ${user.id}: empty $fieldName")
-			}
-		}
-	validate(user.name, "Name")
-	validate(user.address, "Address")
-// Save user to the database
+
+fun saveUser(user: User) {
+  fun validate(value: String, fieldName: String) {
+    if (value.isEmpty()) {
+      throw IllegalArgumentException( "Can't save user ${user.id}: empty $fieldName")
+    }
+  }
+  validate(user.name, "Name")
+  validate(user.address, "Address")
+  // Save user to the database
 }
 ```
 
 To a extension function
 
-```js
+```kotlin
 class User(val id: Int, val name: String, val address: String)
 
 	fun User.validateBeforeSave() {
