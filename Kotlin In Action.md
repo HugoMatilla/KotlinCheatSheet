@@ -72,10 +72,11 @@ Initialize it with different values depending on some condition, if the compiler
 be executed.
 
 ```kotlin
+val message: String
 if (canPerformOperation())
-	var message = "Success"
+  message = "Success"
 else 
-	var message = "Error"
+  message = "Error"
 ```
 
 Objects that a `val` point can be changed
