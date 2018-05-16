@@ -753,3 +753,85 @@ class User(val id: Int, val name: String, val address: String)
 * Kotlin provides a large number of convenient string-handling functions for both regular expressions and plain strings.
 * Triple-quoted strings provide a clean way to write expressions that would require a lot of noisy escaping and string concatenation in Java.
 * Local functions help you structure your code more cleanly and eliminate duplication
+
+# 4 Classes Objects & Interfaces
+## 4.1 Defining class hierarchies
+### 4.1.1 Interfaces in Kotlin
+Contain definitions of abstract methods as well as implementations of non-abstract methods
+```kotlin
+interface Clickable {
+  fun click()
+  fun showOff() = println("I'm clickable!")
+  fun clicked() = println("I was clicked!")
+}
+```
+If two interfaces have a default method with the same name, the class that implements them must override both methods.
+
+```kotlin
+class Button : Clickable, Focusable {
+  override fun click() = println("I was clicked")
+  override fun showOff() {
+    super<Clickable>.showOff()
+    super<Focusable>.showOff()
+  }
+}
+```
+“super” qualified by the supertype name in angle brackets specifies the parent whose method you want to call.
+
+### 4.1.2 Open, final, and abstract modifiers: final by default
+The `fragile base` class problem occurs when modifications of a base class can cause incorrect behavior of subclasses because the changed code of the base class no longer matches the assumptions in its subclasses.
+
+To protect against this problem, classes and methods that aren’t specifically intended to be overridden in subclasses ought to be explicitly marked as `final`.  _Effective Java by Joshua Bloch_
+
+In Kotlin classes and methods are `final` by default.
+
+If you want to allow the creation of subclasses of a class, you need to mark the class with the `open` modifier. Also in every property or method that can be overridden.
+
+```kotlin
+// This class is open: others can inherit from it.
+open class RichButton : Clickable {
+  // This function is final: you can’t override it in a subclass.
+  fun disable() {}
+  // This function is open: you may override it in a subclass.
+  open fun animate() {}
+  // This function overrides an open function and is open as well.
+  override fun click() {}
+}
+```
+
+if you override a member of a base class or interface, the  overriding member will also be `open` by default. In case you don't want this, annotate it as `final`
+
+```kotlin
+open class RichButton : Clickable { 
+  final override fun click() {}
+}
+```
+
+> One significant benefit of classes that are `final` by default is that they enable smart
+casts in a larger variety of scenarios. 
+* Smart casts work only for variables that couldn’t have changed after the type check. 
+* For a class, only a class property that is a `val` and that
+doesn’t have a custom accessor.
+* This means that the property has to be `final`
+* Properties are `final` by default, you can use smart without thinking about it explicitly
+
+Abstract members are always open, so you don’t need to use an explicit open modifier
+
+```kotlin
+//This class is abstract: you can’t create an instance of it.
+abstract class Animated {
+  // This function is abstract
+  abstract fun animate()
+  // Non-abstract functions in abstract classes aren’t open by default 
+  open fun stopAnimating() {}
+  fun animateTwice() {}
+}
+```
+| Modifier  | Corresponding member | Comments for classes| Interfaces |
+|-----------|----------------------|----------|---|
+|final| Can’t be overridden| Used by default for class members|n/a|
+|open| Can be overridden |Should be specified explicitly|n/a|
+|abstract |Must be overridden| Can be used only in abstract classes; abstract members can’t have an implementation|n/a|
+|override| Overrides a member in a superclass or interface|Overridden member is open by default, if not marked final|---|
+
+
