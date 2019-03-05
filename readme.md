@@ -83,7 +83,7 @@ See http://kotlinlang.org/docs/reference/classes.html#classes
 	    Greeter(args[0]).greet()
 	}
 ```
-#Basics 
+# Basics 
 ## _if_
 `if` is an expression, i.e. it returns a value.
 Therefore there is no ternary operator (condition ? then : else),
@@ -340,7 +340,7 @@ See http://kotlinlang.org/docs/reference/data-classes.html#data-classes
 	}
 ``` 
 
-#Delegated properties
+# Delegated properties
 ## Custom Delegate
 
 There's some new syntax: you can say `val 'property name': 'Type' by 'expression'`.
@@ -741,7 +741,7 @@ Ommitted
 ## Maze
 Ommitted
 
-#Problems
+# Problems
 ## Sum
 Your task is to implement the sum() function so that it computes the sum of
 all elements in the given array a.
@@ -840,13 +840,13 @@ data structures like collections or trees.
 ```
 # Canvas
 Ommitted
-#Koans
+# Koans
 ## joinOptions
 ```kotlin
 
 	fun joinOptions(options: Collection<String>) = options.joinToString(", ","[","]")
 ```
-##Default arguments
+## Default arguments
 
 ```kotlin
 
@@ -886,7 +886,7 @@ Ommitted
 	}
 ```	
 
-##Nullable types
+## Nullable types
 ```kotlin
 
 	fun sendMessageToClient(client: Client?, message: String?, mailer: Mailer){
